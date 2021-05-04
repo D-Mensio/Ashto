@@ -23,10 +23,14 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     // Start is called before the first frame update
     void Start()
     {
-        northNeighbor = northGameObject.GetComponent<Piece>();
-        southNeighbor = northGameObject.GetComponent<Piece>();
-        westNeighbor = northGameObject.GetComponent<Piece>();
-        eastNeighbor = northGameObject.GetComponent<Piece>();
+        if (northGameObject)
+            northNeighbor = northGameObject.GetComponent<Piece>();
+        if (southGameObject)
+            southNeighbor = southGameObject.GetComponent<Piece>();
+        if (westGameObject)
+            westNeighbor = westGameObject.GetComponent<Piece>();
+        if (eastGameObject)
+            eastNeighbor = eastGameObject.GetComponent<Piece>();
 
         yAngle = transform.rotation.y;
         phase = 0;
@@ -44,7 +48,7 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     {
         yAngle = yAngle == 270f ? 0 : yAngle += 90.0f;
         phase = phase == 3 ? 0 : phase + 1;
-        Debug.Log(phase.ToString());
+        //Debug.Log(phase.ToString());
 
         // Rotate the cube by converting the angles into a quaternion.
         target = Quaternion.Euler(0, 0, yAngle);
@@ -55,6 +59,6 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
 
     public abstract bool IsAccessible(Direction direction);
 
-    public abstract Piece GetNextPiece(string label, Direction inDirection, out Direction outDirection);
+    public abstract Piece GetNextPiece(Direction inDirection, out Direction outDirection);
 
 }

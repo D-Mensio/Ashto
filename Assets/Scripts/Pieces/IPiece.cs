@@ -19,15 +19,15 @@ public class IPiece : InteractiblePiece
         }
     }
 
-    public override Piece GetNextPiece(string label, Direction inDirection, out Direction outDirection)
+    public override Piece GetNextPiece(Direction inDirection, out Direction outDirection)
     {
         outDirection = inDirection;
         return inDirection switch
         {
-            Direction.North => southNeighbor,
-            Direction.South => northNeighbor,
-            Direction.East => westNeighbor,
-            Direction.West => eastNeighbor,
+            Direction.North => northNeighbor,
+            Direction.South => southNeighbor,
+            Direction.East => eastNeighbor,
+            Direction.West => westNeighbor,
             _ => null,
         };
     }

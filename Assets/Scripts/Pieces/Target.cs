@@ -11,7 +11,7 @@ public class Target : MonoBehaviour, Piece
         return true;
     }
 
-    public Piece GetNextPiece(string label, Direction inDirection, out Direction outDirection)
+    public Piece GetNextPiece(Direction inDirection, out Direction outDirection)
     {
         outDirection = Direction.North;
         return null;

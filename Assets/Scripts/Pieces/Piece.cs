@@ -15,5 +15,5 @@ public interface Piece
     //Returns true if the piece is accessible from direction direction
     public bool IsAccessible(Direction direction);
 
-    public Piece GetNextPiece(string label, Direction inDirection, out Direction outDirection);
+    public Piece GetNextPiece(Direction inDirection, out Direction outDirection);
 }
