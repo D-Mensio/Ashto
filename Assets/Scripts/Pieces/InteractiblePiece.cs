@@ -20,6 +20,34 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     protected Piece westNeighbor;
     protected Piece eastNeighbor;
 
+    /*
+    //Executed only in editor mode when a field is changed
+    void OnInspectorGUI()
+    {
+        switch (phase)
+        {
+            case 0:
+                yAngle = 0f;
+                break;
+            case 1:
+                yAngle = 90f;
+                break;
+            case 2:
+                yAngle = 180f;
+                break;
+            case 3:
+                yAngle = 270f;
+                break;
+        }
+        transform.rotation = Quaternion.Euler(0, 0, yAngle);
+    }
+    */
+
+    void Awake()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, yAngle);
+        target = transform.rotation;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -31,17 +59,12 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
             westNeighbor = westGameObject.GetComponent<Piece>();
         if (eastGameObject)
             eastNeighbor = eastGameObject.GetComponent<Piece>();
-
-        yAngle = transform.rotation.y;
-        phase = 0;
-
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
-
     }
 
     void OnMouseDown()

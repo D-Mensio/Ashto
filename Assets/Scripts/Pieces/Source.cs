@@ -29,7 +29,7 @@ public class Source : MonoBehaviour, Piece
             westNeighbor = westGameObject.GetComponent<Piece>();
         if (eastGameObject)
             eastNeighbor = eastGameObject.GetComponent<Piece>();
-        Activate();
+        StartCoroutine(SpawnBalls());
     }
 
     public bool IsAccessible(Direction direction)
@@ -71,6 +71,15 @@ public class Source : MonoBehaviour, Piece
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
             newBall.Initialize(label, Direction.West, this, transform.position);
+        }
+    }
+
+    private IEnumerator SpawnBalls()
+    {
+        while (true)
+        {
+            Activate();
+            yield return new WaitForSeconds(1f);
         }
     }
 }

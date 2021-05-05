@@ -15,7 +15,8 @@ public class Ball : MonoBehaviour
 
     public Piece currentPiece;
 
-    public bool destroyOnTarget;
+    public bool destroyOnNextMove;
+    public bool targetReached;
 
     public void Initialize(string label, Direction direction, Piece currentPiece, Vector3 position)
     {
@@ -24,13 +25,17 @@ public class Ball : MonoBehaviour
         this.currentPiece = currentPiece;
         this.targetPosition = new Vector3 (position.x, position.y, -1);
         this.reachedMidPoint = true;
+        this.destroyOnNextMove = false;
+        this.targetReached = false;
 
-        Move(direction);
+        UpdateTargetPosition();
+        Move();
         //UpdateTargetPosition();
     }
 
     private void UpdateTargetPosition()
     {
+        //get Direction
         if (reachedMidPoint)
         {
             Direction newDirection;
@@ -44,13 +49,10 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            destroyOnNextMove = true;
+            //Destroy(gameObject);    //path is interrupted
         }
-    }
-
-    private void Move(Direction direction)
-    {
-        Debug.Log("Move");
+        //update target position
         switch (direction)
         {
             case Direction.North:
@@ -64,10 +66,32 @@ public class Ball : MonoBehaviour
                 break;
             case Direction.West:
                 targetPosition += new Vector3(-0.5f, 0, 0);
-                break;        
+                break;
+            case Direction.Stop:
+                targetReached = true;
+                //Debug.Log("Target reached");
+                //Destroy(gameObject);    //reached target
+                break;
         }
-        StartCoroutine(AsyncMove(targetPosition));
-        UpdateTargetPosition();
+    }
+
+    private void Move()
+    {
+        //Debug.Log("Move");
+        //Debug.Log(direction);
+        if (destroyOnNextMove)
+        {
+            Destroy(gameObject);
+        }
+        else if (targetReached)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(AsyncMove(targetPosition));
+            UpdateTargetPosition();
+        }
     }
 
     private IEnumerator AsyncMove(Vector3 targetPosition)
@@ -82,8 +106,6 @@ public class Ball : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        Debug.Log("done");
-        Move(direction);
+        Move();
     }
 }
