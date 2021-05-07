@@ -26,11 +26,6 @@ public class Target : MonoBehaviour, Piece
         StartCoroutine(CheckActive());
     }
 
-    void Update()
-    {
-        
-    }
-
     private IEnumerator CheckActive()
     {
         while(true)
@@ -51,8 +46,12 @@ public class Target : MonoBehaviour, Piece
     {
         if (col.tag == "Ball")
         {
-            Debug.Log("reached");
-            reached = true;
+            Ball ball = col.GetComponent<Ball>();
+            if (ball.label.Equals(label))
+            {
+                Debug.Log("reached");
+                reached = true;
+            }
         }
     }
 }

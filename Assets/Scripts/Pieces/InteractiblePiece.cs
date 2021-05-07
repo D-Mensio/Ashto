@@ -10,10 +10,16 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     public int phase;
     public float yAngle;
 
+    public bool isRotating;
+    public float angleDetectRotation = 30f; //min angle to detect a rotation
+
     public GameObject northGameObject;
     public GameObject southGameObject;
     public GameObject westGameObject;
     public GameObject eastGameObject;
+
+    private List<Ball> containedBalls;
+
 
     protected Piece northNeighbor;
     protected Piece southNeighbor;
@@ -47,6 +53,8 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     {
         transform.rotation = Quaternion.Euler(0, 0, yAngle);
         target = transform.rotation;
+        isRotating = false;
+        containedBalls = new List<Ball>();
     }
     // Start is called before the first frame update
     void Start()
@@ -64,11 +72,14 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     // Update is called once per frame
     void Update()
     {
+        if (Quaternion.Angle(transform.rotation,target) <= angleDetectRotation)
+            isRotating = false;
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
     }
 
     void OnMouseDown()
     {
+        isRotating = true;
         yAngle = yAngle == 270f ? 0 : yAngle += 90.0f;
         phase = phase == 3 ? 0 : phase + 1;
         //Debug.Log(phase.ToString());
@@ -78,6 +89,24 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
 
         // Dampen towards the target rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
+        foreach(Ball ball in new List<Ball>(containedBalls))
+        {
+            containedBalls.Remove(ball);
+            if(ball != null)
+                Destroy(ball.gameObject);
+        }
+    }
+
+    public void RegisterBall(Ball ball)
+    {
+        containedBalls.Add(ball);
+        StartCoroutine(RemoveBall(ball));
+    }
+
+    private IEnumerator RemoveBall(Ball ball)
+    {
+        yield return new WaitForSeconds(2f);
+        containedBalls.Remove(ball);
     }
 
     public abstract bool IsAccessible(Direction direction);

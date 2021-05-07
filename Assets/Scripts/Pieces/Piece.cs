@@ -8,7 +8,8 @@ public enum Direction
     East,
     South,
     West,
-    Stop
+    Stop,
+    Error
 }
 
 public interface Piece

@@ -23,6 +23,7 @@ public class Ball : MonoBehaviour
         this.label = label;
         this.direction = direction;
         this.currentPiece = currentPiece;
+        this.speed = 1;
         this.targetPosition = new Vector3 (position.x, position.y, -1);
         this.reachedMidPoint = true;
         this.destroyOnNextMove = false;
@@ -44,7 +45,7 @@ public class Ball : MonoBehaviour
             reachedMidPoint = false;
         }
         else if (!(currentPiece is null) && currentPiece.IsAccessible(direction))
-        {
+        {    
             reachedMidPoint = true;
         }
         else
@@ -67,6 +68,7 @@ public class Ball : MonoBehaviour
             case Direction.West:
                 targetPosition += new Vector3(-0.5f, 0, 0);
                 break;
+            case Direction.Error:
             case Direction.Stop:
                 targetReached = true;
                 //Debug.Log("Target reached");
@@ -89,7 +91,10 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            StartCoroutine(AsyncMove(targetPosition));
+            if (!reachedMidPoint || currentPiece.IsAccessible(direction))
+                StartCoroutine(AsyncMove(targetPosition));
+            else if (reachedMidPoint)
+                Destroy(gameObject);
             UpdateTargetPosition();
         }
     }
@@ -105,6 +110,10 @@ public class Ball : MonoBehaviour
             transform.position = Vector3.Lerp(startingPos, targetPosition, (elapsedTime / time));
             elapsedTime += Time.deltaTime;
             yield return null;
+        }
+        if (reachedMidPoint && currentPiece is InteractiblePiece)
+        {
+            ((InteractiblePiece)currentPiece).RegisterBall(this);
         }
         Move();
     }
