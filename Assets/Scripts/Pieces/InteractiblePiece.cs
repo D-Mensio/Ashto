@@ -20,6 +20,8 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
 
     private List<Ball> containedBalls;
 
+    private Menu menu;
+
 
     protected Piece northNeighbor;
     protected Piece southNeighbor;
@@ -67,6 +69,8 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
             westNeighbor = westGameObject.GetComponent<Piece>();
         if (eastGameObject)
             eastNeighbor = eastGameObject.GetComponent<Piece>();
+
+        menu = GameObject.Find("Image").GetComponent<Menu>();
     }
 
     // Update is called once per frame
@@ -79,21 +83,24 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
 
     void OnMouseDown()
     {
-        isRotating = true;
-        yAngle = yAngle == 270f ? 0 : yAngle += 90.0f;
-        phase = phase == 3 ? 0 : phase + 1;
-        //Debug.Log(phase.ToString());
-
-        // Rotate the cube by converting the angles into a quaternion.
-        target = Quaternion.Euler(0, 0, yAngle);
-
-        // Dampen towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
-        foreach(Ball ball in new List<Ball>(containedBalls))
+        if (!menu.open)
         {
-            containedBalls.Remove(ball);
-            if(ball != null)
-                Destroy(ball.gameObject);
+            isRotating = true;
+            yAngle = yAngle == 270f ? 0 : yAngle += 90.0f;
+            phase = phase == 3 ? 0 : phase + 1;
+            //Debug.Log(phase.ToString());
+
+            // Rotate the cube by converting the angles into a quaternion.
+            target = Quaternion.Euler(0, 0, yAngle);
+
+            // Dampen towards the target rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
+            foreach (Ball ball in new List<Ball>(containedBalls))
+            {
+                containedBalls.Remove(ball);
+                if (ball != null)
+                    Destroy(ball.gameObject);
+            }
         }
     }
 
@@ -101,6 +108,11 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     {
         containedBalls.Add(ball);
         StartCoroutine(RemoveBall(ball));
+    }
+
+    public void DeRegisterBall(Ball ball)
+    {
+        containedBalls.Remove(ball);
     }
 
     private IEnumerator RemoveBall(Ball ball)

@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Source : MonoBehaviour, Piece
 {
+    [Header("Parameters")]
     public int strength;
     public string label;
+    public GameObject ballPrefab;
 
+    [Header("Neighbor objects")]
     public GameObject northGameObject;
     public GameObject southGameObject;
     public GameObject westGameObject;
     public GameObject eastGameObject;
 
-    public GameObject ballPrefab;
+    private Piece northNeighbor;
+    private Piece southNeighbor;
+    private Piece westNeighbor;
+    private Piece eastNeighbor;
 
-    protected Piece northNeighbor;
-    protected Piece southNeighbor;
-    protected Piece westNeighbor;
-    protected Piece eastNeighbor;
+    //private GameObject pieceManager;
+
 
     void Start()
     {
@@ -55,22 +59,22 @@ public class Source : MonoBehaviour, Piece
         if (!(northNeighbor is null) && northNeighbor.IsAccessible(Direction.North))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.North, this, transform.position);
+            newBall.Initialize(label, Direction.North, this, transform.position, strength);
         }
         if (!(southNeighbor is null) && southNeighbor.IsAccessible(Direction.South))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.South, this, transform.position);
+            newBall.Initialize(label, Direction.South, this, transform.position, strength);
         }
         if (!(eastNeighbor is null) && eastNeighbor.IsAccessible(Direction.East))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.East, this, transform.position);
+            newBall.Initialize(label, Direction.East, this, transform.position, strength);
         }
         if (!(westNeighbor is null) && westNeighbor.IsAccessible(Direction.West))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.West, this, transform.position);
+            newBall.Initialize(label, Direction.West, this, transform.position, strength);
         }
     }
 
