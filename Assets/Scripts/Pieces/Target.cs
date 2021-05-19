@@ -9,6 +9,8 @@ public class Target : MonoBehaviour, Piece
     public bool active;
 
     public Color color;
+    private float targetOpacity;
+    private Material borderMaterial;
     //private List<Renderer> borders;
 
     public bool IsAccessible(Direction direction)
@@ -26,19 +28,25 @@ public class Target : MonoBehaviour, Piece
     {
         reached = false;
         active = false;
-        //targetColor = defaultColor;
-        //borders = new List<Renderer>();
+        borderMaterial = new Material(Shader.Find("Sprites/Default"));
         foreach (Transform child in transform)
         {
             if (child.CompareTag("Border"))
             {
                 Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
                 //borders.Add(childRenderer);
-                childRenderer.material = new Material(childRenderer.material);
-                childRenderer.material.color = color;
+                childRenderer.material = borderMaterial;
             }
+            borderMaterial.color = color;
         }
         StartCoroutine(CheckActive());
+    }
+
+    void Update()
+    {
+        Color currColor = borderMaterial.color;
+        currColor.a = Mathf.Lerp(currColor.a, targetOpacity, Time.deltaTime * 5);
+        borderMaterial.color = currColor;    
     }
 
     private IEnumerator CheckActive()
@@ -49,10 +57,12 @@ public class Target : MonoBehaviour, Piece
             {
                 active = true;
                 reached = false;
+                targetOpacity = 1f;
             }
             else
             {
                 active = false;
+                targetOpacity = 0.5f;
             }
             yield return new WaitForSeconds(1f);
         }

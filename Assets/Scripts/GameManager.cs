@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject cam;
     public GameObject countdownObject;
-    private Text countdown;
+    private TextMeshProUGUI countdown;
 
     private void Awake()
     {
-        countdown = countdownObject.GetComponent<Text>();
+        countdown = countdownObject.GetComponent<TextMeshProUGUI>();
     }
 
     // Start is called before the first frame update
