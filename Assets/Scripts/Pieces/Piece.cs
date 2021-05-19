@@ -14,6 +14,7 @@ public enum Direction
 
 public interface Piece
 {
+
     //Returns true if the piece is accessible from direction direction
     public bool IsAccessible(Direction direction);
 

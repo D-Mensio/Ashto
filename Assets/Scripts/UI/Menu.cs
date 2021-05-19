@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour
 {
-    public float zoom;
-
     private Animator anim;
     public bool open;
     private CameraController cam;
@@ -16,6 +14,7 @@ public class Menu : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        anim.updateMode = AnimatorUpdateMode.UnscaledTime;
         open = false;
     }
 
@@ -29,6 +28,7 @@ public class Menu : MonoBehaviour
     {
         if(open && Input.GetMouseButtonDown(0) && !EventSystem.current.currentSelectedGameObject)   //checks if no UI element currently being pressed
         {
+            Time.timeScale = 1;
             open = false;
             anim.SetBool("isOpen", false);
             cam.Reset();
@@ -39,10 +39,10 @@ public class Menu : MonoBehaviour
     {
         if (!open)
         {
+            Time.timeScale = 0;
             open = true;
             anim.SetBool("isOpen", true);
-            cam.ZoomOut(zoom);
-            cam.MoveY(-zoom);
+            cam.ZoomOut();
         }
     }
 }

@@ -8,6 +8,9 @@ public class Target : MonoBehaviour, Piece
     public bool reached;
     public bool active;
 
+    public Color color;
+    //private List<Renderer> borders;
+
     public bool IsAccessible(Direction direction)
     {
         return true;
@@ -23,6 +26,18 @@ public class Target : MonoBehaviour, Piece
     {
         reached = false;
         active = false;
+        //targetColor = defaultColor;
+        //borders = new List<Renderer>();
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("Border"))
+            {
+                Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
+                //borders.Add(childRenderer);
+                childRenderer.material = new Material(childRenderer.material);
+                childRenderer.material.color = color;
+            }
+        }
         StartCoroutine(CheckActive());
     }
 
@@ -30,14 +45,15 @@ public class Target : MonoBehaviour, Piece
     {
         while(true)
         {
-            // execute block of code here
             if (reached)
             {
                 active = true;
                 reached = false;
             }
             else
+            {
                 active = false;
+            }
             yield return new WaitForSeconds(1f);
         }
     }
@@ -49,7 +65,6 @@ public class Target : MonoBehaviour, Piece
             Ball ball = col.GetComponent<Ball>();
             if (ball.label.Equals(label))
             {
-                Debug.Log("reached");
                 reached = true;
             }
         }

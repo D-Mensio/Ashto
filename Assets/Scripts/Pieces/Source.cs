@@ -7,6 +7,7 @@ public class Source : MonoBehaviour, Piece
     [Header("Parameters")]
     public int strength;
     public string label;
+    public Color color;
     public GameObject ballPrefab;
 
     [Header("Neighbor objects")]
@@ -20,8 +21,7 @@ public class Source : MonoBehaviour, Piece
     private Piece westNeighbor;
     private Piece eastNeighbor;
 
-    //private GameObject pieceManager;
-
+    //private List<Renderer> borders;
 
     void Start()
     {
@@ -33,6 +33,19 @@ public class Source : MonoBehaviour, Piece
             westNeighbor = westGameObject.GetComponent<Piece>();
         if (eastGameObject)
             eastNeighbor = eastGameObject.GetComponent<Piece>();
+
+        //borders = new List<Renderer>();
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("Border"))
+            {
+                Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
+                //borders.Add(childRenderer);
+                childRenderer.material = new Material(childRenderer.material);
+                childRenderer.material.color = color;
+            }
+        }
+
         StartCoroutine(SpawnBalls());
     }
 
@@ -59,22 +72,22 @@ public class Source : MonoBehaviour, Piece
         if (!(northNeighbor is null) && northNeighbor.IsAccessible(Direction.North))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.North, this, transform.position, strength);
+            newBall.Initialize(label, Direction.North, this, transform.position, strength, color);
         }
         if (!(southNeighbor is null) && southNeighbor.IsAccessible(Direction.South))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.South, this, transform.position, strength);
+            newBall.Initialize(label, Direction.South, this, transform.position, strength, color);
         }
         if (!(eastNeighbor is null) && eastNeighbor.IsAccessible(Direction.East))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.East, this, transform.position, strength);
+            newBall.Initialize(label, Direction.East, this, transform.position, strength, color);
         }
         if (!(westNeighbor is null) && westNeighbor.IsAccessible(Direction.West))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
-            newBall.Initialize(label, Direction.West, this, transform.position, strength);
+            newBall.Initialize(label, Direction.West, this, transform.position, strength, color);
         }
     }
 

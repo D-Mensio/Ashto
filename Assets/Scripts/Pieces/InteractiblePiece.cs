@@ -10,6 +10,10 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     public int phase;
     public float yAngle;
 
+    public Color defaultColor;
+    private Color targetColor;
+    private Dictionary<Color, int> containedColors;
+
     public bool isRotating;
     public float angleDetectRotation = 30f; //min angle to detect a rotation
 
@@ -17,6 +21,8 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
     public GameObject southGameObject;
     public GameObject westGameObject;
     public GameObject eastGameObject;
+
+    private Material borderMaterial;
 
     private List<Ball> containedBalls;
 
@@ -56,7 +62,20 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
         transform.rotation = Quaternion.Euler(0, 0, yAngle);
         target = transform.rotation;
         isRotating = false;
+        targetColor = defaultColor;
         containedBalls = new List<Ball>();
+        containedColors = new Dictionary<Color, int>();
+
+        borderMaterial = new Material(Shader.Find("Sprites/Default"));
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("Border"))
+            {
+                Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
+                childRenderer.material = borderMaterial;
+            }
+        }
+
     }
     // Start is called before the first frame update
     void Start()
@@ -79,6 +98,11 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
         if (Quaternion.Angle(transform.rotation,target) <= angleDetectRotation)
             isRotating = false;
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
+        ColorBorders();
+        //var asString = string.Join(",", containedColors);
+        //Debug.Log(asString);
+
+        borderMaterial.color = Color.Lerp(borderMaterial.color, targetColor, Time.deltaTime * 5);
     }
 
     void OnMouseDown()
@@ -97,7 +121,7 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
             foreach (Ball ball in new List<Ball>(containedBalls))
             {
-                containedBalls.Remove(ball);
+                DeRegisterBall(ball);
                 if (ball != null)
                     Destroy(ball.gameObject);
             }
@@ -106,19 +130,58 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
 
     public void RegisterBall(Ball ball)
     {
+        //Debug.Log("newBallRegistered");
         containedBalls.Add(ball);
+        if (containedColors.TryGetValue(ball.color, out int count))
+        {
+            containedColors[ball.color] = count + 1;
+        }
+        else
+        {
+            containedColors.Add(ball.color,1);
+        }
         StartCoroutine(RemoveBall(ball));
     }
 
     public void DeRegisterBall(Ball ball)
     {
-        containedBalls.Remove(ball);
+        if (containedBalls.Contains(ball))
+        {
+            //Debug.Log("ballRemoved");
+            containedBalls.Remove(ball);
+            if (containedColors.TryGetValue(ball.color, out int count))
+            {
+                if (count == 1)
+                    containedColors.Remove(ball.color);
+                else
+                    containedColors[ball.color] = count - 1;
+            }
+        }
     }
 
     private IEnumerator RemoveBall(Ball ball)
     {
         yield return new WaitForSeconds(2f);
-        containedBalls.Remove(ball);
+        DeRegisterBall(ball);
+    }
+
+    private void ColorBorders()
+    {
+        Color borderColor = defaultColor;
+
+        foreach(Color c in containedColors.Keys)
+        {
+            if (borderColor == defaultColor)
+            {
+                borderColor = c;
+                //Debug.Log(borderColor);
+            }
+            else
+                borderColor = Color.Lerp(borderColor, c, 0.5f);
+        }
+
+        targetColor = borderColor;
+
     }
 
     public abstract bool IsAccessible(Direction direction);

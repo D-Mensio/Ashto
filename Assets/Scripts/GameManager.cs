@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,15 +11,24 @@ public class GameManager : MonoBehaviour
 
     private bool winCheckActive;
 
+    public GameObject cam;
+    public GameObject countdownObject;
+    private Text countdown;
+
+    private void Awake()
+    {
+        countdown = countdownObject.GetComponent<Text>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         targets = new List<Target>();
         foreach(GameObject targetObject in targetObjects)
         {
-            Debug.Log(targetObject);
+            //Debug.Log(targetObject);
             Target target = targetObject.GetComponent<Target>();
-            Debug.Log(target);
+            //Debug.Log(target);
             targets.Add(target);
             
         }
@@ -45,21 +55,31 @@ public class GameManager : MonoBehaviour
         {
             if (targets.All(x => x.active))
             {
-                Debug.Log(time);
+                countdown.text = time.ToString();
+                //Play sound clip (clock ticking)
+                //Debug.Log(time);
                 time--;
                 yield return new WaitForSeconds(1f);
             }
             else
             {
+                countdown.text = "";
+                //Play wrong clip
                 broken = true;
             }
         }
         if (broken)
         {
-            Debug.Log("Broken win condition");
+            //Debug.Log("Broken win condition");
             winCheckActive = false;
         }
         else
-            Debug.Log("Win!");
+        {
+            //Play right clip
+            countdown.text = "";
+            //Debug.Log("win");
+            cam.GetComponent<CameraController>().LevelTransition();
+        }
+       
     }
 }

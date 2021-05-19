@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour
     public float strength;
     public float currentStrength;
     private Renderer rend;
+    public Color color;
 
     //Movement variables
     private Direction direction;
@@ -27,7 +28,7 @@ public class Ball : MonoBehaviour
         rend.material = new Material(rend.material);
     }
 
-    public void Initialize(string label, Direction direction, Piece piece, Vector3 position, float strength)
+    public void Initialize(string label, Direction direction, Piece piece, Vector3 position, float strength, Color color)
     {
         this.label = label;
         this.speed = 1;
@@ -40,7 +41,8 @@ public class Ball : MonoBehaviour
         this.targetIsMidPoint = true;
         this.destroyOnNextMove = false;
         this.targetReached = false;
-
+        rend.material.color = color;
+        this.color = color;
         UpdateTargetPosition();
         Move();
     }
@@ -123,7 +125,7 @@ public class Ball : MonoBehaviour
 
         if (targetIsMidPoint)
         {
-            if(targetPiece is InteractiblePiece)
+            if (targetPiece is InteractiblePiece && targetPiece.IsAccessible(direction))
                 ((InteractiblePiece)targetPiece).RegisterBall(this);
             if(currentPiece is InteractiblePiece)
                 ((InteractiblePiece)currentPiece).DeRegisterBall(this);
