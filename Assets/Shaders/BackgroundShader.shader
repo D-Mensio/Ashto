@@ -2,11 +2,11 @@ Shader "Custom/BackgroundShader"
 {
 	Properties{
 	[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
-	_FirstColor("First Color", Color) = (1,1,1,1)
-	_SecondColor("Bot Color", Color) = (1,1,1,1)
-	_WaveSpeed("Wave Speed", Float) = 0
-	_WaveAmp("Wave Amp", Float) = 0
-	_NoiseTex("Noise texture", 2D) = "white" {}
+	_FirstColor("Light Color", Color) = (1,1,1,1)
+	_SecondColor("Dark Color", Color) = (1,1,1,1)
+	_NoiseTex("Noise Texture", 2D) = "white" {}
+	_HorizontalSpeed("Horizontal speed", Float) = 0.1
+	_VerticalSpeed("Vertical speed", Float) = 0.05
 	}
 	SubShader{
 		Tags {"Queue" = "Background"  "IgnoreProjector" = "True"}
@@ -22,8 +22,8 @@ Shader "Custom/BackgroundShader"
 
 		fixed4 _FirstColor;
 		fixed4 _SecondColor;
-		float _WaveSpeed;
-		float _WaveAmp;
+		float _HorizontalSpeed;
+		float _VerticalSpeed;
 		sampler2D _NoiseTex;
 
 		struct v2f {
@@ -39,12 +39,12 @@ Shader "Custom/BackgroundShader"
 		}
 
 		fixed4 frag(v2f i) : COLOR{
-			float noiseSample = tex2Dlod(_NoiseTex, float4(i.texcoord.x + 0.01 * sin(_Time[1]), i.texcoord.y + 0.01 * sin(_Time[1]), 0, 0));
-			float f = (i.texcoord.x + i.texcoord.y) / 2;
+			float noiseSample = tex2Dlod(_NoiseTex, float4(i.texcoord.x + 0.01 * _HorizontalSpeed * _Time[1], i.texcoord.y + 0.01 * _VerticalSpeed * _Time[1], 0, 0));
+			//float f = (i.texcoord.x + i.texcoord.y) / 2;
+			float f = sqrt((0.5 - i.texcoord.x) * (0.5 - i.texcoord.x) + (0 - i.texcoord.y) * (0 - i.texcoord.y));
 			fixed4 c = lerp(_FirstColor, _SecondColor, f);
-			f *= 0.8 * noiseSample;
-			c= lerp(c, c * 0.5, f);
-			c.a = 1;
+			c= lerp(c, c * 0.8, noiseSample);
+			//c.a = 1;
 			return c;
 		}
 		ENDCG
