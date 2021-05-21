@@ -67,6 +67,7 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
         containedColors = new Dictionary<Color, int>();
 
         borderMaterial = new Material(Shader.Find("Sprites/Default"));
+        borderMaterial.color = defaultColor;
         foreach (Transform child in transform)
         {
             if (child.CompareTag("Border"))
@@ -89,7 +90,7 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
         if (eastGameObject)
             eastNeighbor = eastGameObject.GetComponent<Piece>();
 
-        menu = GameObject.Find("Image").GetComponent<Menu>();
+        menu = GameObject.Find("UI").GetComponent<Menu>();
     }
 
     // Update is called once per frame
@@ -177,11 +178,26 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
                 //Debug.Log(borderColor);
             }
             else
-                borderColor = Color.Lerp(borderColor, c, 0.5f);
+                borderColor = InterpolateColors(containedColors.Keys);
         }
 
         targetColor = borderColor;
 
+    }
+
+    private Color InterpolateColors(ICollection<Color> colors)
+    {
+        
+        float increment = 1f/colors.Count;
+        //Debug.Log(increment);
+        Color color = new Color(0, 0, 0, 0);
+        foreach (Color c in colors)
+        {
+            color += c * increment;
+            //Debug.Log(color);
+        }
+        color.a = 1;
+        return color;
     }
 
     public abstract bool IsAccessible(Direction direction);

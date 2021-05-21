@@ -29,6 +29,7 @@ public class Target : MonoBehaviour, Piece
         reached = false;
         active = false;
         borderMaterial = new Material(Shader.Find("Sprites/Default"));
+        targetOpacity = 0.5f;
         foreach (Transform child in transform)
         {
             if (child.CompareTag("Border"))
@@ -39,7 +40,7 @@ public class Target : MonoBehaviour, Piece
             }
             borderMaterial.color = color;
         }
-        StartCoroutine(CheckActive());
+        //StartCoroutine(CheckActive());
     }
 
     void Update()
@@ -51,21 +52,16 @@ public class Target : MonoBehaviour, Piece
 
     private IEnumerator CheckActive()
     {
-        while(true)
+        Debug.Log("act");
+        while(reached)
         {
-            if (reached)
-            {
-                active = true;
-                reached = false;
-                targetOpacity = 1f;
-            }
-            else
-            {
-                active = false;
-                targetOpacity = 0.5f;
-            }
-            yield return new WaitForSeconds(1f);
+            active = true;
+            reached = false;
+            targetOpacity = 1f;
+                yield return new WaitForSeconds(1.2f);
         }
+        active = false;
+        targetOpacity = 0.5f;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -76,6 +72,10 @@ public class Target : MonoBehaviour, Piece
             if (ball.label.Equals(label))
             {
                 reached = true;
+                if (!active)
+                {
+                    StartCoroutine(CheckActive());
+                }
             }
         }
     }

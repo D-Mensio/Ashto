@@ -5,23 +5,26 @@ using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour
 {
+    public GameObject button;
     private Animator anim;
     public bool open;
-    private CameraController cam;
+    public CameraController cam;
 
     private EventSystem es;
 
+    public GameObject levelNum;
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        anim.updateMode = AnimatorUpdateMode.UnscaledTime;
+        
         open = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        cam = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        anim = button.GetComponent<Animator>();
+        anim.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     private void Update()
@@ -30,6 +33,7 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 1;
             open = false;
+            levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
             cam.Reset();
         }
@@ -41,6 +45,7 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 0;
             open = true;
+            levelNum.SetActive(true);
             anim.SetBool("isOpen", true);
             cam.ZoomOut();
         }

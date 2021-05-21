@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Border
+  - PieceWNeighboors
   layers:
   - Default
   - TransparentFX

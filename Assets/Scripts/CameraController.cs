@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         levelTransition = false;
-        Menu m = GameObject.Find("Image").GetComponent<Menu>();
+        Menu m = GameObject.Find("UI").GetComponent<Menu>();
         if (m.open)
             ZoomOut();
     }
