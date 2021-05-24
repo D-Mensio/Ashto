@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public int startScene;
     // Start is called before the first frame update
     void Start()
     {
-        LoadLevel(1);
+        LoadLevel(startScene);
     }
 
     private void LoadLevel(int n)

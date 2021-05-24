@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
         GameObject countdown = GameObject.Find("Countdown");
         menu.countdown = countdown;
         countdownText = countdown.GetComponent<TextMeshProUGUI>();
+        countdownText.text = "";
         winCheckActive = false;
         winClip = GetComponent<AudioSource>();
     }
@@ -80,7 +81,6 @@ public class LevelManager : MonoBehaviour
             winClip.Play();
             countdownText.text = "";
             //Debug.Log("win");
-            GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
             StartCoroutine(LoadNextScene());
         }
 
@@ -88,8 +88,17 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadNextScene()
     {
-        yield return new WaitForSeconds(1f);
+        GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
+        yield return new WaitForSecondsRealtime(1f);
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Single);
     }
-   
+
+    public IEnumerator Restart()
+    {
+        Debug.Log("Restart");
+        GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
+        yield return new WaitForSecondsRealtime(1f);
+        SceneManager.LoadScene(levelNumber, LoadSceneMode.Single);
+    }
+
 }

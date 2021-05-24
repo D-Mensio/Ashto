@@ -36,7 +36,7 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 1;
             open = false;
-            countdown.SetActive(true);
+            countdown.transform.localScale = Vector3.one;
             levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
             cam.Reset();
@@ -49,7 +49,7 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 0;
             open = true;
-            countdown.SetActive(false);
+            countdown.transform.localScale = Vector3.zero;
             levelNum.SetActive(true);
             anim.SetBool("isOpen", true);
             cam.ZoomOut();

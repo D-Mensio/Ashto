@@ -3,33 +3,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public enum Pieces
-{
-    IPiece,
-    XPiece,
-    LPiece,
-    Source,
-    Target
-}
-
-public enum Dir
-{
-    Up,
-    Down,
-    Left,
-    Right
-}
-
-[CustomEditor(typeof(IPiece))]
-class IPieceEditor : Editor
+[CustomEditor(typeof(Source))]
+class SourceEditor : Editor
 {
     private Pieces p;
     private Dir d;
-    private IPiece targetPiece;
+    private Source targetPiece;
 
     public void OnEnable()
     {
-        targetPiece = (IPiece)target;
+        targetPiece = (Source)target;
     }
 
     public override void OnInspectorGUI()

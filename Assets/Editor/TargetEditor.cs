@@ -3,33 +3,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public enum Pieces
-{
-    IPiece,
-    XPiece,
-    LPiece,
-    Source,
-    Target
-}
-
-public enum Dir
-{
-    Up,
-    Down,
-    Left,
-    Right
-}
-
-[CustomEditor(typeof(IPiece))]
-class IPieceEditor : Editor
+[CustomEditor(typeof(Target))]
+class TargetEditor : Editor
 {
     private Pieces p;
     private Dir d;
-    private IPiece targetPiece;
+    private Target targetPiece;
 
     public void OnEnable()
     {
-        targetPiece = (IPiece)target;
+        targetPiece = (Target)target;
     }
 
     public override void OnInspectorGUI()
@@ -77,6 +60,11 @@ class IPieceEditor : Editor
         {
             GameObject.Find("LevelManager").GetComponent<LevelManager>().targets.Add(obj.GetComponent<Target>());
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().targets.Remove(targetPiece);
     }
 
 }
