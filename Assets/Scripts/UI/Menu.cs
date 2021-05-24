@@ -14,6 +14,8 @@ public class Menu : MonoBehaviour
 
     public GameObject levelNum;
 
+    public GameObject countdown;
+
     private void Awake()
     {
         
@@ -25,14 +27,16 @@ public class Menu : MonoBehaviour
     {
         anim = button.GetComponent<Animator>();
         anim.updateMode = AnimatorUpdateMode.UnscaledTime;
+        es = EventSystem.current;
     }
 
     private void Update()
     {
-        if(open && Input.GetMouseButtonDown(0) && !EventSystem.current.currentSelectedGameObject)   //checks if no UI element currently being pressed
+        if(open && Input.GetMouseButtonDown(0) && !es.currentSelectedGameObject)   //checks if no UI element currently being pressed
         {
             Time.timeScale = 1;
             open = false;
+            countdown.SetActive(true);
             levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
             cam.Reset();
@@ -45,6 +49,7 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 0;
             open = true;
+            countdown.SetActive(false);
             levelNum.SetActive(true);
             anim.SetBool("isOpen", true);
             cam.ZoomOut();

@@ -52,7 +52,7 @@ public class Target : MonoBehaviour, Piece
 
     private IEnumerator CheckActive()
     {
-        Debug.Log("act");
+        //Debug.Log("act");
         while(reached)
         {
             active = true;

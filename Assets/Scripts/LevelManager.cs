@@ -14,9 +14,11 @@ public class LevelManager : MonoBehaviour
 
     public List<Target> targets;
 
-    private TextMeshProUGUI countdown;
+    private TextMeshProUGUI countdownText;
     public GameObject cameraObject;
     private bool winCheckActive;
+
+    private AudioSource winClip;
 
     private void Awake()
     {
@@ -25,8 +27,11 @@ public class LevelManager : MonoBehaviour
         Menu menu = GameObject.Find("UI").GetComponent<Menu>();
         menu.cam = cameraObject.GetComponent<CameraController>();
         menu.levelNum.GetComponent<TextMeshProUGUI>().text = "-" + levelNumber + "-";
-        countdown = GameObject.Find("Countdown").GetComponent<TextMeshProUGUI>();
+        GameObject countdown = GameObject.Find("Countdown");
+        menu.countdown = countdown;
+        countdownText = countdown.GetComponent<TextMeshProUGUI>();
         winCheckActive = false;
+        winClip = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -45,14 +50,14 @@ public class LevelManager : MonoBehaviour
     }
     private IEnumerator WinLevel()
     {
-        int time = 5;
+        int time = 3;
         bool broken = false;
 
         while (!broken && time > 0)
         {
             if (targets.All(x => x.active))
             {
-                countdown.text = time.ToString();
+                countdownText.text = time.ToString();
                 //Play sound clip (clock ticking)
                 //Debug.Log(time);
                 time--;
@@ -60,7 +65,7 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                countdown.text = "";
+                countdownText.text = "";
                 //Play wrong clip
                 broken = true;
             }
@@ -72,8 +77,8 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            //Play right clip
-            countdown.text = "";
+            winClip.Play();
+            countdownText.text = "";
             //Debug.Log("win");
             GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
             StartCoroutine(LoadNextScene());
