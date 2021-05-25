@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public int levelNumber;
     public Color lightColor;
     public Color darkColor;
-    public int nextLevel;
+    private int nextLevel;
 
     public List<Target> targets;
 
@@ -33,6 +33,7 @@ public class LevelManager : MonoBehaviour
         countdownText.text = "";
         winCheckActive = false;
         winClip = GetComponent<AudioSource>();
+        nextLevel = levelNumber + 1;
     }
 
     // Start is called before the first frame update
@@ -82,6 +83,8 @@ public class LevelManager : MonoBehaviour
             winClip.Play();
             countdownText.text = "";
             //Debug.Log("win");
+            if (PlayerPrefs.GetInt("LevelUnlocked") < nextLevel)
+                PlayerPrefs.SetInt("LevelUnlocked", nextLevel);
             StartCoroutine(LoadNextScene());
         }
 

@@ -59,7 +59,8 @@ public abstract class InteractiblePiece : MonoBehaviour, Piece
 
     void Awake()
     {
-        transform.rotation = Quaternion.Euler(0, 0, yAngle);
+        yAngle = transform.rotation.eulerAngles.z;
+        phase = (int) yAngle / 90;
         target = transform.rotation;
         isRotating = false;
         targetColor = defaultColor;
