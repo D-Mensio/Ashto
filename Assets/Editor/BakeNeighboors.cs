@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class BakeNeighboors
 {
-    [MenuItem("Pieces/Bake")]
+    [MenuItem("Pieces/Bake Neighboors")]
     static void BakePieces()
     {
         GameObject[] pieces = GameObject.FindGameObjectsWithTag("PieceWNeighboors");
@@ -35,7 +36,22 @@ public class BakeNeighboors
                 i.westGameObject = GetObjAtPos(pos + Vector3.left);
                 PrefabUtility.RecordPrefabInstancePropertyModifications(i);
             }
+            EditorSceneManager.SaveOpenScenes();
         }
+    }
+
+    [MenuItem("Pieces/Bake Targets")]
+    static void BakeTargets()
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
+        LevelManager levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        levelManager.targets = new List<Target>();
+        foreach (GameObject t in targets)
+        {
+            levelManager.targets.Add(t.GetComponent<Target>());
+        }
+        PrefabUtility.RecordPrefabInstancePropertyModifications(levelManager);
+        EditorSceneManager.SaveOpenScenes();
     }
 
     private static GameObject GetObjAtPos(Vector3 p)

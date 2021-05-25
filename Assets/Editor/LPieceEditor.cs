@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(XPiece))]
+[CustomEditor(typeof(LPiece))]
 class LPieceEditor : Editor
 {
     private Pieces p;
