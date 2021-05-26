@@ -92,7 +92,7 @@ public class Ball : MonoBehaviour
 
     private void Move()
     {
-        if (destroyOnNextMove || targetReached || currentStrength <= 0 || (targetIsMidPoint && !targetPiece.IsAccessible(direction)))
+        if (destroyOnNextMove || targetReached || (targetIsMidPoint && !targetPiece.IsAccessible(direction)))
         {
             Destroy(gameObject);
         }
@@ -116,7 +116,7 @@ public class Ball : MonoBehaviour
 
             currentStrength -= (transform.position - pos).magnitude;
             Color col = rend.material.color;
-            col.a = 0.2f + currentStrength / strength;
+            col.a = Mathf.Max(0.2f + currentStrength / strength, 0.05f);
             rend.material.color = col;
 
             elapsedTime += Time.deltaTime;

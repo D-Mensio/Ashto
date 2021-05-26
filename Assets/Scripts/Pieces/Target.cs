@@ -69,7 +69,7 @@ public class Target : MonoBehaviour, Piece
         if (col.tag == "Ball")
         {
             Ball ball = col.GetComponent<Ball>();
-            if (ball.label.Equals(label))
+            if (ball.label.Equals(label) && ball.currentStrength > 0)
             {
                 reached = true;
                 if (!active)
