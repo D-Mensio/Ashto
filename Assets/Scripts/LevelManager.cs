@@ -97,6 +97,13 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Single);
     }
 
+    public IEnumerator LoadScene(int n)
+    {
+        GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
+        yield return new WaitForSecondsRealtime(1f);
+        SceneManager.LoadScene(n, LoadSceneMode.Single);
+    }
+
     public IEnumerator Restart()
     {
         Debug.Log("Restart");
