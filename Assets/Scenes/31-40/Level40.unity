@@ -1261,7 +1261,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 8
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -2378,11 +2378,11 @@ Transform:
   - {fileID: 1737113992}
   - {fileID: 1083623082}
   - {fileID: 984567067}
-  - {fileID: 1886376297}
   - {fileID: 682964237}
   - {fileID: 1685298405}
-  - {fileID: 256515299}
   - {fileID: 313208403}
+  - {fileID: 256515299}
+  - {fileID: 1886376297}
   - {fileID: 667561850}
   - {fileID: 1667364282}
   - {fileID: 2131239497}
@@ -2390,11 +2390,11 @@ Transform:
   - {fileID: 1604127384}
   - {fileID: 730688197}
   - {fileID: 608132159}
-  - {fileID: 886401240}
   - {fileID: 660760518}
+  - {fileID: 886401240}
   - {fileID: 1766514769}
-  - {fileID: 2060852973}
   - {fileID: 1506994}
+  - {fileID: 2060852973}
   - {fileID: 467902859}
   - {fileID: 881170330}
   - {fileID: 772583970}
@@ -2402,15 +2402,15 @@ Transform:
   - {fileID: 1241383592}
   - {fileID: 1531155963}
   - {fileID: 1704667776}
-  - {fileID: 2126844128}
   - {fileID: 1221301120}
   - {fileID: 38682701}
+  - {fileID: 2126844128}
   - {fileID: 1292684867}
   - {fileID: 382249779}
   - {fileID: 382654125}
   - {fileID: 1192240877}
-  - {fileID: 1625505229}
   - {fileID: 1749448913}
+  - {fileID: 1625505229}
   - {fileID: 290852134}
   - {fileID: 266791351}
   - {fileID: 890533933}

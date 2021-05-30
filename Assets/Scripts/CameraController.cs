@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         normalSize = cam.orthographicSize;
+        zoom = (normalSize / 3);
         targetSize = cam.orthographicSize;
         targetPos1 = zeroPos;
         targetPos2 = zeroPos;

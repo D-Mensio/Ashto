@@ -258,7 +258,7 @@ MonoBehaviour:
   offScreenPos: {x: 0, y: -10, z: -10}
   speed1: 2
   speed2: 5
-  zoom: 2
+  zoom: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

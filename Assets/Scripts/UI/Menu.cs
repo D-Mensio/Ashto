@@ -16,6 +16,8 @@ public class Menu : MonoBehaviour
 
     public GameObject countdown;
 
+    public GameObject levelSelectPanel;
+
     private void Awake()
     {
         
@@ -37,6 +39,7 @@ public class Menu : MonoBehaviour
             Time.timeScale = 1;
             open = false;
             countdown.transform.localScale = Vector3.one;
+            levelSelectPanel.transform.localScale = Vector3.zero;
             levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
             cam.Reset();

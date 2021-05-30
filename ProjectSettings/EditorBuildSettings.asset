@@ -128,4 +128,34 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/31-40/Level40.unity
     guid: 6b72ba9860e5ba840a9f53eb8ebc9a64
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level41.unity
+    guid: 7c3fe429801a9d740a5b883a1b18837d
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level42.unity
+    guid: e3b9a3db512344149960911d7692d15b
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level43.unity
+    guid: 14a1888af0d86844bbfca46ae77534be
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level44.unity
+    guid: 8d31d09e4426d924d99044072e26ac8f
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level45.unity
+    guid: 239b7553a1828c4498fb95e421e34821
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level46.unity
+    guid: abf2d2d4ce3495e4db0cd26ebee7e735
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level47.unity
+    guid: 4dd299d05adce9f45ad0ef6bf2a61c45
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level48.unity
+    guid: 42ec8c949a86fe541bdc2e535e286e8f
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level49.unity
+    guid: bf0234007ebc32549bcaea4d8afeec8a
+  - enabled: 1
+    path: Assets/Scenes/41-50/Level50.unity
+    guid: 644b34067f17d154cb2fab4d1bacb684
   m_configObjects: {}
