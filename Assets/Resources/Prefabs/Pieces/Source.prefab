@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7939161216050466046}
   - component: {fileID: 7939161216050466047}
   - component: {fileID: -7645155966154620044}
-  - component: {fileID: 7939161216050466045}
+  - component: {fileID: 3539229322292062052}
+  - component: {fileID: 8782020457868004816}
   m_Layer: 0
   m_Name: Source
   m_TagString: PieceWNeighboors
@@ -117,7 +118,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7939161216050466045
+--- !u!114 &3539229322292062052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,17 +127,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 7939161216050466034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc39a88830a3d24bb49f562f206d8fd, type: 3}
+  m_Script: {fileID: 11500000, guid: f64d72de38816b74b82fd402254ecc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 7
+  strength: 10
   label: S
-  color: {r: 1, g: 1, b: 1, a: 1}
+  color: {r: 0, g: 0, b: 0, a: 1}
   ballPrefab: {fileID: 1571766233892793321, guid: 8b0cf4615ff9d7e4f99e5ae2cf81e311, type: 3}
-  northGameObject: {fileID: 0}
-  southGameObject: {fileID: 0}
-  westGameObject: {fileID: 0}
-  eastGameObject: {fileID: 0}
+--- !u!114 &8782020457868004816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7939161216050466034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90d80205357e90419cdb34508ba7e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  northNeighbor: {fileID: 0}
+  southNeighbor: {fileID: 0}
+  westNeighbor: {fileID: 0}
+  eastNeighbor: {fileID: 0}
 --- !u!1 &7939161216303743739
 GameObject:
   m_ObjectHideFlags: 0

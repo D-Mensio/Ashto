@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3983929943501326002}
   - component: {fileID: 4594269654071315760}
-  - component: {fileID: 3983929943501326004}
+  - component: {fileID: 5849652268554806586}
+  - component: {fileID: 2120994622014152939}
+  - component: {fileID: -7865126470486728961}
   m_Layer: 0
   m_Name: XPiece
   m_TagString: PieceWNeighboors
@@ -79,7 +81,7 @@ PolygonCollider2D:
       - {x: -0.25, y: -0.5}
       - {x: 0.25, y: -0.5}
       - {x: 0.25, y: -0.25}
---- !u!114 &3983929943501326004
+--- !u!114 &5849652268554806586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,18 +90,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 3983929943501326007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33e797e862b77a744a81bfda8b64f98d, type: 3}
+  m_Script: {fileID: 11500000, guid: 57885e893a0be2145adeab87cf6125bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 0
-  yAngle: 0
-  defaultColor: {r: 0, g: 0, b: 0, a: 0}
-  isRotating: 0
+  rotationSpeed: 5
   angleDetectRotation: 30
-  northGameObject: {fileID: 0}
-  southGameObject: {fileID: 0}
-  westGameObject: {fileID: 0}
-  eastGameObject: {fileID: 0}
+--- !u!114 &2120994622014152939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3983929943501326007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43660b8dceac694e88464d815204f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  containedBalls: []
+--- !u!114 &-7865126470486728961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3983929943501326007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cdfe57b4ad4354bbee6a821dac34e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  northNeighbor: {fileID: 0}
+  southNeighbor: {fileID: 0}
+  westNeighbor: {fileID: 0}
+  eastNeighbor: {fileID: 0}
 --- !u!1 &3983929943565451589
 GameObject:
   m_ObjectHideFlags: 0

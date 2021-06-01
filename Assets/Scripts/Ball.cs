@@ -16,19 +16,20 @@ public class Ball : MonoBehaviour
     //Movement variables
     private Direction direction;
     private Vector3 targetPosition;
-    private Piece targetPiece;
-    private Piece currentPiece;
+    private PieceConnections targetPiece;
+    private PieceConnections currentPiece;
     private bool targetIsMidPoint;
     private bool destroyOnNextMove;
     private bool targetReached;
-    
+
+    private bool isDeleting;
     void Awake()
     {
         rend = GetComponent<Renderer>();
         rend.material = new Material(rend.material);
     }
 
-    public void Initialize(string label, Direction direction, Piece piece, Vector3 position, float strength, Color color)
+    public void Initialize(string label, Direction direction, PieceConnections piece, Vector3 position, float strength, Color color)
     {
         this.label = label;
         this.speed = 1;
@@ -52,9 +53,8 @@ public class Ball : MonoBehaviour
         //get Direction
         if (targetIsMidPoint)
         {
-            Direction newDirection;
-            targetPiece = currentPiece.GetNextPiece(direction, out newDirection);
-            direction = newDirection;
+            direction = currentPiece.GetNextDirection(direction);
+            targetPiece = currentPiece.GetConnection(direction);
             targetIsMidPoint = false;
         }
         else if (!(targetPiece is null) && targetPiece.IsAccessible(direction))
@@ -94,7 +94,7 @@ public class Ball : MonoBehaviour
     {
         if (destroyOnNextMove || targetReached || (targetIsMidPoint && !targetPiece.IsAccessible(direction)))
         {
-            Destroy(gameObject);
+            Delete();
         }
         else
         {
@@ -109,28 +109,56 @@ public class Ball : MonoBehaviour
 
         float elapsedTime = 0;
         var time = 0.5f / speed;
-        while (elapsedTime < time)
+        while (elapsedTime < time && !isDeleting)
         {
             Vector3 pos = transform.position;
             transform.position = Vector3.Lerp(startingPos, targetPosition, (elapsedTime / time));
 
             currentStrength -= (transform.position - pos).magnitude;
-            Color col = rend.material.color;
-            col.a = Mathf.Max(0.2f + currentStrength / strength, 0.05f);
-            rend.material.color = col;
+
+            SetOpacity(Mathf.Max(0.2f + currentStrength / strength, 0.05f));
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        if (targetIsMidPoint)
+        if (!isDeleting)
         {
-            if (targetPiece is InteractiblePiece && targetPiece.IsAccessible(direction))
-                ((InteractiblePiece)targetPiece).RegisterBall(this);
-            if(currentPiece is InteractiblePiece)
-                ((InteractiblePiece)currentPiece).DeRegisterBall(this);
-            currentPiece = targetPiece;
+            if (targetIsMidPoint)
+            {
+                currentPiece = targetPiece;
+            }
+            Move();
         }
-        Move();
     }
+
+    public void Delete()
+    {
+        if (!isDeleting)
+        {
+            isDeleting = true;
+            StartCoroutine(DestroyBall());
+        }
+    }
+
+    private IEnumerator DestroyBall()
+    {
+        float time = 0.15f;
+        float initialOpacity = rend.material.color.a;
+        while (time > 0)
+        {
+            SetOpacity(initialOpacity * time);
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        transform.position = new Vector3(100, 100, 0);
+        Destroy(gameObject);
+    }
+
+    private void SetOpacity(float f)
+    {
+        Color col = rend.material.color;
+        col.a = f;
+        rend.material.color = col;
+    }
+
 }

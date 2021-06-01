@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     public Color darkColor;
     private int nextLevel;
 
-    public List<Target> targets;
+    public List<TargetActivation> targets;
 
     private TextMeshProUGUI countdownText;
     public GameObject cameraObject;
@@ -27,6 +27,8 @@ public class LevelManager : MonoBehaviour
         Menu menu = GameObject.Find("UI").GetComponent<Menu>();
         menu.cam = cameraObject.GetComponent<CameraController>();
         menu.levelNum.GetComponent<TextMeshProUGUI>().text = "-" + levelNumber + "-";
+        InputManager im = GameObject.Find("InputManager").GetComponent<InputManager>();
+        im.cam = cameraObject.GetComponent<Camera>();
         GameObject countdown = GameObject.Find("Countdown");
         menu.countdown = countdown;
         countdownText = countdown.GetComponent<TextMeshProUGUI>();
@@ -61,7 +63,6 @@ public class LevelManager : MonoBehaviour
             if (targets.All(x => x.active))
             {
                 countdownText.text = time.ToString();
-                //Play sound clip (clock ticking)
                 //Debug.Log(time);
                 time--;
                 yield return new WaitForSeconds(1.2f);
@@ -69,7 +70,6 @@ public class LevelManager : MonoBehaviour
             else
             {
                 countdownText.text = "";
-                //Play wrong clip
                 broken = true;
             }
         }

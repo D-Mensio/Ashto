@@ -556,7 +556,9 @@ GameObject:
   m_Component:
   - component: {fileID: 389781656344239674}
   - component: {fileID: 602439623596098928}
-  - component: {fileID: 389781656344239675}
+  - component: {fileID: 1324415092082455425}
+  - component: {fileID: -5491389576352463029}
+  - component: {fileID: 526184157167618925}
   m_Layer: 0
   m_Name: LPiece
   m_TagString: PieceWNeighboors
@@ -615,7 +617,7 @@ PolygonCollider2D:
       - {x: -0.25, y: -0.5}
       - {x: 0.25, y: -0.5}
       - {x: 0.25, y: -0.25}
---- !u!114 &389781656344239675
+--- !u!114 &1324415092082455425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -624,15 +626,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 389781656344239672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 009266f866fe2b448a3a582ab59ed91d, type: 3}
+  m_Script: {fileID: 11500000, guid: 57885e893a0be2145adeab87cf6125bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 0
-  yAngle: 0
-  defaultColor: {r: 0, g: 0, b: 0, a: 0}
-  isRotating: 0
+  rotationSpeed: 5
   angleDetectRotation: 30
-  northGameObject: {fileID: 0}
-  southGameObject: {fileID: 0}
-  westGameObject: {fileID: 0}
-  eastGameObject: {fileID: 0}
+--- !u!114 &-5491389576352463029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389781656344239672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43660b8dceac694e88464d815204f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  containedBalls: []
+--- !u!114 &526184157167618925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389781656344239672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f657e710e3ed94f983439575e69d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  northNeighbor: {fileID: 0}
+  southNeighbor: {fileID: 0}
+  westNeighbor: {fileID: 0}
+  eastNeighbor: {fileID: 0}

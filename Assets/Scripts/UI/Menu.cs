@@ -16,6 +16,8 @@ public class Menu : MonoBehaviour
 
     public GameObject countdown;
 
+    public GameObject backButton;
+
     public GameObject levelSelectPanel;
 
     private void Awake()
@@ -32,12 +34,13 @@ public class Menu : MonoBehaviour
         es = EventSystem.current;
     }
 
-    private void Update()
+    public void Close()
     {
-        if(open && Input.GetMouseButtonDown(0) && !es.currentSelectedGameObject)   //checks if no UI element currently being pressed
+        if(open)
         {
             Time.timeScale = 1;
             open = false;
+            backButton.SetActive(false);
             countdown.transform.localScale = Vector3.one;
             levelSelectPanel.transform.localScale = Vector3.zero;
             levelNum.SetActive(false);
@@ -46,12 +49,13 @@ public class Menu : MonoBehaviour
         }
     }
 
-    public void Press()
+    public void Open()
     {
         if (!open)
         {
             Time.timeScale = 0;
             open = true;
+            backButton.SetActive(true);
             countdown.transform.localScale = Vector3.zero;
             levelNum.SetActive(true);
             anim.SetBool("isOpen", true);

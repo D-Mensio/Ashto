@@ -3,21 +3,37 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Source))]
-class SourceEditor : Editor
+public enum Pieces
+{
+    IPiece,
+    XPiece,
+    LPiece,
+    Source,
+    Target
+}
+
+public enum Dir
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+[CustomEditor(typeof(PieceConnections), true)]
+public class BaseClassEditor : Editor
 {
     private Pieces p;
     private Dir d;
-    private Source targetPiece;
+    private PieceConnections targetPiece;
 
     public void OnEnable()
     {
-        targetPiece = (Source)target;
+        targetPiece = (PieceConnections)target;
     }
 
     public override void OnInspectorGUI()
     {
-        //Piece myTarget = (Piece)target;
         DrawDefaultInspector();
 
         GUILayout.BeginVertical("box");
@@ -56,12 +72,5 @@ class SourceEditor : Editor
         GameObject obj = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
         obj.transform.position = targetPiece.gameObject.transform.position + offset;
         obj.transform.parent = GameObject.Find("====PUZZLE PIECES====").transform;
-        if(p is Pieces.Target)
-        {
-            GameObject.Find("LevelManager").GetComponent<LevelManager>().targets.Add(obj.GetComponent<Target>());
-        }
     }
-
 }
-
-

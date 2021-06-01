@@ -2,29 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Target : MonoBehaviour, Piece
+public class TargetActivation : MonoBehaviour
 {
-    public string label;
-    public bool reached;
-    public bool active;
-
-    public Color color;
+    [SerializeField]
+    private string label;
+    private bool reached;
+    public bool active { get; private set; }
+    [SerializeField]
+    private Color color;
     private float targetOpacity;
     private Material borderMaterial;
-    //private List<Renderer> borders;
 
-    public bool IsAccessible(Direction direction)
-    {
-        return true;
-    }
-
-    public Piece GetNextPiece(Direction inDirection, out Direction outDirection)
-    {
-        outDirection = Direction.Stop;
-        return null;
-    }
-
-    void Start()
+    private void Start()
     {
         reached = false;
         active = false;
@@ -35,30 +24,27 @@ public class Target : MonoBehaviour, Piece
             if (child.CompareTag("Border"))
             {
                 Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
-                //borders.Add(childRenderer);
                 childRenderer.material = borderMaterial;
             }
             borderMaterial.color = color;
         }
-        //StartCoroutine(CheckActive());
     }
 
     void Update()
     {
         Color currColor = borderMaterial.color;
         currColor.a = Mathf.Lerp(currColor.a, targetOpacity, Time.deltaTime * 5);
-        borderMaterial.color = currColor;    
+        borderMaterial.color = currColor;
     }
 
     private IEnumerator CheckActive()
     {
-        //Debug.Log("act");
-        while(reached)
+        while (reached)
         {
             active = true;
             reached = false;
             targetOpacity = 1f;
-                yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(1.2f);
         }
         active = false;
         targetOpacity = 0.5f;
@@ -79,6 +65,4 @@ public class Target : MonoBehaviour, Piece
             }
         }
     }
-
-
 }

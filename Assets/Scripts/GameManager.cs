@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour
 {
     public int startScene;
     public bool testing;
+
+    private void Awake()
+    {
+        QualitySettings.vSyncCount = 1;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

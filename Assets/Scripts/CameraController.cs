@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private float normalSize;
     
     public Vector3 zeroPos;
-    public Vector3 offScreenPos;
+    private Vector3 offScreenPos;
 
     private Vector3 relativePos1;
     private Vector3 relativePos2;
@@ -33,6 +33,7 @@ public class CameraController : MonoBehaviour
         normalSize = cam.orthographicSize;
         zoom = (normalSize / 3);
         targetSize = cam.orthographicSize;
+        offScreenPos = new Vector3(0, -2 * normalSize, -10);
         targetPos1 = zeroPos;
         targetPos2 = zeroPos;
         targetPos = zeroPos;
