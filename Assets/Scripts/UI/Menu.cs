@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Menu : MonoBehaviour
 {
@@ -10,8 +9,6 @@ public class Menu : MonoBehaviour
     public bool open;
     public CameraController cam;
 
-    private EventSystem es;
-
     public GameObject levelNum;
 
     public GameObject countdown;
@@ -19,6 +16,12 @@ public class Menu : MonoBehaviour
     public GameObject backButton;
 
     public GameObject levelSelectPanel;
+    private Animator levelSelectAnim;
+
+    public GameObject creditsPanel;
+    private Animator creditsAnim;
+
+
 
     private void Awake()
     {
@@ -30,8 +33,9 @@ public class Menu : MonoBehaviour
     void Start()
     {
         anim = button.GetComponent<Animator>();
-        anim.updateMode = AnimatorUpdateMode.UnscaledTime;
-        es = EventSystem.current;
+
+        levelSelectAnim = levelSelectPanel.GetComponent<Animator>();
+        creditsAnim = creditsPanel.GetComponent<Animator>();
     }
 
     public void Close()
@@ -42,7 +46,8 @@ public class Menu : MonoBehaviour
             open = false;
             backButton.SetActive(false);
             countdown.transform.localScale = Vector3.one;
-            levelSelectPanel.transform.localScale = Vector3.zero;
+            levelSelectAnim.SetBool("isOpen", false);
+            creditsAnim.SetBool("isOpen", false);
             levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
             cam.Reset();

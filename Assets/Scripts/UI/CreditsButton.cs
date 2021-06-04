@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class CreditsButton : MonoBehaviour
 {
+    public GameObject creditsPanel;
 
+    private Animator creditsAnim;
 
-    private void Awake()
+    private void Start()
     {
+        creditsAnim = creditsPanel.GetComponent<Animator>();
     }
 
     public void OnPress()
     {
-        //TODO, for now resets level progress
-        PlayerPrefs.SetInt("LevelUnlocked", 1);
+        creditsAnim.SetBool("isOpen", true);
+        //PlayerPrefs.SetInt("LevelUnlocked", 1);
     }
 }
