@@ -15,9 +15,6 @@ public class Menu : MonoBehaviour
 
     public GameObject backButton;
 
-    public GameObject levelSelectPanel;
-    private Animator levelSelectAnim;
-
     public GameObject creditsPanel;
     private Animator creditsAnim;
 
@@ -33,8 +30,6 @@ public class Menu : MonoBehaviour
     void Start()
     {
         anim = button.GetComponent<Animator>();
-
-        levelSelectAnim = levelSelectPanel.GetComponent<Animator>();
         creditsAnim = creditsPanel.GetComponent<Animator>();
     }
 
@@ -46,7 +41,6 @@ public class Menu : MonoBehaviour
             open = false;
             backButton.SetActive(false);
             countdown.transform.localScale = Vector3.one;
-            levelSelectAnim.SetBool("isOpen", false);
             creditsAnim.SetBool("isOpen", false);
             levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
