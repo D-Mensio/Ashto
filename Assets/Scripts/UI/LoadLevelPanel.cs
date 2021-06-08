@@ -31,7 +31,7 @@ public class LoadLevelPanel : MonoBehaviour
     {
         Debug.Log("Load level button pressed");
         StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().LoadScene(n));
-        levelSelectAnim.SetBool("isOpen", false);
+        Close();
     }
 
     private void UpdateLock()

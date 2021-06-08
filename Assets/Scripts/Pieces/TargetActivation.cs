@@ -13,7 +13,7 @@ public class TargetActivation : MonoBehaviour
     private float targetOpacity;
     private Material borderMaterial;
 
-    private void Start()
+    private void Awake()
     {
         reached = false;
         active = false;
@@ -26,6 +26,7 @@ public class TargetActivation : MonoBehaviour
                 Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
                 childRenderer.material = borderMaterial;
             }
+            color.a = 0.5f;
             borderMaterial.color = color;
         }
     }

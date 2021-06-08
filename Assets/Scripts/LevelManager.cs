@@ -36,6 +36,7 @@ public class LevelManager : MonoBehaviour
         winCheckActive = false;
         winClip = GetComponent<AudioSource>();
         nextLevel = levelNumber + 1;
+        PlayerPrefs.SetInt("LastLevelPlayed", levelNumber);
     }
 
     // Start is called before the first frame update

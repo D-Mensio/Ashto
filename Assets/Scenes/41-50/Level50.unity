@@ -522,7 +522,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zeroPos: {x: 0, y: 0, z: -10}
-  offScreenPos: {x: 0, y: -10, z: -10}
   speed1: 2
   speed2: 5
   zoom: 2
@@ -1426,6 +1425,10 @@ PrefabInstance:
     - target: {fileID: 3539229322292062052, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: color.r
       value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539229322292062052, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
+      propertyPath: strength
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7939161216050466034, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: m_Name

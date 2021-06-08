@@ -14,17 +14,19 @@ public class GameManager : MonoBehaviour
     {
         QualitySettings.vSyncCount = 1;
         int sceneToLoad;
+
+        if (!PlayerPrefs.HasKey("LevelUnlocked"))
+            PlayerPrefs.SetInt("LevelUnlocked", 1);
+        if (!PlayerPrefs.HasKey("LastLevelPlayed"))
+            PlayerPrefs.SetInt("LastLevelPlayed", 1);
+
         if (testing)
             sceneToLoad = startScene;
-        else if (PlayerPrefs.HasKey("LevelUnlocked"))
-        {
-            sceneToLoad = PlayerPrefs.GetInt("LevelUnlocked");
-        }
         else
         {
-            PlayerPrefs.SetInt("LevelUnlocked", 1);
-            sceneToLoad = 1;
+            sceneToLoad = PlayerPrefs.GetInt("LastLevelPlayed");
         }
+
         LoadLevel(sceneToLoad);
     }
 
