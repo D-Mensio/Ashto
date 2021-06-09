@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("LevelUnlocked", 1);
         if (!PlayerPrefs.HasKey("LastLevelPlayed"))
             PlayerPrefs.SetInt("LastLevelPlayed", 1);
+        if (!PlayerPrefs.HasKey("AudioOn"))
+            PlayerPrefs.SetInt("AudioOn", 1);
 
         if (testing)
             sceneToLoad = startScene;

@@ -63,20 +63,24 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DimensionMultiplier: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HorizontalOffset: 0
     - _HorizontalSpeed: 5
     - _Metallic: 0
     - _Middle: 0.001
     - _Mode: 0
+    - _NoiseStrength: 0.6
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _VerticalOffset: 0
     - _VerticalSpeed: 3
     - _WaveAmp: 2
     - _WaveSpeed: 2

@@ -10,35 +10,41 @@ public class BackgroundManager : MonoBehaviour
     private float offsetV;
     private float speedH;
     private float speedV;
+    [SerializeField]
+    private float horizontalSpeedModifier;
+    [SerializeField]
+    private float verticalSpeedModifier;
 
     void Start()
     {
-        targetColor1 = gameObject.GetComponent<Renderer>().material.GetColor("_FirstColor");
-        targetColor2 = gameObject.GetComponent<Renderer>().material.GetColor("_SecondColor");
         offsetH = 0;
         offsetV = 0;
+        SetColor(targetColor1, targetColor2);
+        targetColor1 = gameObject.GetComponent<Renderer>().material.GetColor("_FirstColor");
+        targetColor2 = gameObject.GetComponent<Renderer>().material.GetColor("_SecondColor");
+
         speedH = Random.Range(-2f, 2f);
         speedV = Random.Range(-2f, 2f);
+
         gameObject.GetComponent<Renderer>().material.SetFloat("_HorizontalSpeed", speedH);
         gameObject.GetComponent<Renderer>().material.SetFloat("_VerticalSpeed", speedV);
+
+        gameObject.GetComponent<Renderer>().material.SetFloat("_DimensionMultiplier", ((float)Screen.height / Screen.width) / 3 + (1f/3));
     }
 
     void Update()
     {
         var color1 = Color.Lerp(gameObject.GetComponent<Renderer>().material.GetColor("_FirstColor"), targetColor1, Time.unscaledDeltaTime * 1f);
         var color2 = Color.Lerp(gameObject.GetComponent<Renderer>().material.GetColor("_SecondColor"), targetColor2, Time.unscaledDeltaTime * 1f);
+
         gameObject.GetComponent<Renderer>().material.SetColor("_FirstColor", color1);
         gameObject.GetComponent<Renderer>().material.SetColor("_SecondColor", color2);
-        offsetH += 0.01f * speedH * Time.unscaledDeltaTime;
-        if (offsetH > 22)
-            offsetH -= 22;
-        else if (offsetH < -22)
-            offsetH += 22;
-        offsetV += 0.01f * speedV * Time.unscaledDeltaTime;
-        if (offsetV > 15)
-            offsetV -= 15;
-        else if (offsetV < -15)
-            offsetV += 15;
+
+        gameObject.GetComponent<Renderer>().material.SetFloat("_HorizontalOffset", offsetH);
+        gameObject.GetComponent<Renderer>().material.SetFloat("_VerticalOffset", offsetV);
+
+        offsetH += horizontalSpeedModifier * speedH * Time.unscaledDeltaTime;
+        offsetV += verticalSpeedModifier * speedV * Time.unscaledDeltaTime;
     }
 
     public void SetColor(Color color1, Color color2)
@@ -46,12 +52,8 @@ public class BackgroundManager : MonoBehaviour
         targetColor1 = color1;
         targetColor2 = color2;
 
-        gameObject.GetComponent<Renderer>().material.SetFloat("_InitialOffsetH", offsetH);
-        gameObject.GetComponent<Renderer>().material.SetFloat("_InitialOffsetV", offsetV);
         speedH = Random.Range(-2f, 2f);
         speedV = Random.Range(-2f, 2f);
-        gameObject.GetComponent<Renderer>().material.SetFloat("_HorizontalSpeed", speedH);
-        gameObject.GetComponent<Renderer>().material.SetFloat("_VerticalSpeed", speedV);
     }
 
 }

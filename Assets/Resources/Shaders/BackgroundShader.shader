@@ -5,16 +5,14 @@ Shader "Custom/BackgroundShader"
 	_FirstColor("Light Color", Color) = (1,1,1,1)
 	_SecondColor("Dark Color", Color) = (1,1,1,1)
 	_NoiseTex("Noise Texture", 2D) = "white" {}
-	_HorizontalSpeed("Horizontal speed", Float) = 0.1
-	_VerticalSpeed("Vertical speed", Float) = 0.05
-	_InitialOffsetH("Initial Horizontal Offset", Float) = 0
-	_InitialOffsetV("Initial Vertical Offset", Float) = 0
+	_NoiseStrength("Noise Strength", Float) = 0.7
+	_HorizontalOffset("Horizontal Offset", Float) = 0
+	_VerticalOffset("Vertical Offset", Float) = 0
+	_DimensionMultiplier("Dimension Multiplier", Float) = 1
+	_DarkMultiplier("Dark Multiplier", Float) = 0
 	}
 	SubShader{
 		Tags {"Queue" = "Background"  "IgnoreProjector" = "True"}
-		LOD 100
-
-		ZWrite On
 
 		Pass {
 		CGPROGRAM
@@ -24,11 +22,12 @@ Shader "Custom/BackgroundShader"
 
 		fixed4 _FirstColor;
 		fixed4 _SecondColor;
-		float _HorizontalSpeed;
-		float _VerticalSpeed;
-		float _InitialOffsetH;
-		float _InitialOffsetV;
+		float _HorizontalOffset;
+		float _VerticalOffset;
 		sampler2D _NoiseTex;
+		float _NoiseStrength;
+		float _DimensionMultiplier;
+		float _DarkMultiplier;
 
 		struct v2f {
 			float4 pos : SV_POSITION;
@@ -43,12 +42,13 @@ Shader "Custom/BackgroundShader"
 		}
 
 		fixed4 frag(v2f i) : COLOR{
-			float noiseSample = tex2Dlod(_NoiseTex, float4(i.texcoord.x + _InitialOffsetH + 0.01 * _HorizontalSpeed * _Time[1], i.texcoord.y + _InitialOffsetV + 0.01 * _VerticalSpeed * _Time[1], 0, 0));
-			//float f = (i.texcoord.x + i.texcoord.y) / 2;
-			float f = sqrt((0.5 - i.texcoord.x) * (0.5 - i.texcoord.x) + (0 - i.texcoord.y) * (0 - i.texcoord.y));
-			fixed4 c = lerp(_FirstColor, _SecondColor, f);
-			c= lerp(c, c * 0.7, noiseSample);
+			float noiseSample = tex2Dlod(_NoiseTex, float4((i.texcoord.x + _HorizontalOffset) * _DimensionMultiplier, (i.texcoord.y + _VerticalOffset) * _DimensionMultiplier, 0, 0));
+			float f = i.texcoord.y;
+			//float f = sqrt((0.5 - i.texcoord.x) * (0.5 - i.texcoord.x) + (0 - i.texcoord.y) * (0 - i.texcoord.y));
+			fixed4 c = lerp(_FirstColor, _SecondColor, clamp(f + _NoiseStrength * (0.5 - noiseSample),0,1));
+			//c= lerp(c, c * _NoiseStrength, noiseSample);
 			//c.a = 1;
+			c -= _DarkMultiplier * fixed4(1,1,1,1);
 			return c;
 		}
 		ENDCG
