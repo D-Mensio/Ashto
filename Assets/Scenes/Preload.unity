@@ -7138,7 +7138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startScene: 60
-  testing: 1
+  testing: 0
 --- !u!1 &879025373
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,9 +15,13 @@ public class TargetActivation : MonoBehaviour
     private void Awake()
     {
         reached = false;
-        active = false;
-        borderMaterial = GetComponent<ActiveBorder>().borderMaterial;
+        active = false;     
         targetOpacity = 0.5f;
+    }
+
+    private void Start()
+    {
+        borderMaterial = GetComponent<ActiveBorder>().borderMaterial;
         color.a = 0.5f;
         borderMaterial.color = color;
     }
