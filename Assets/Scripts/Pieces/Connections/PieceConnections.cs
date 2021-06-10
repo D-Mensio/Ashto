@@ -20,7 +20,7 @@ public abstract class PieceConnections : MonoBehaviour
     public PieceConnections westNeighbor;
     public PieceConnections eastNeighbor;
 
-    public abstract bool IsAccessible(Direction direction);
+    public abstract bool IsAccessible(Direction direction, string label);
 
     public abstract Direction GetNextDirection(Direction inDirection);
 

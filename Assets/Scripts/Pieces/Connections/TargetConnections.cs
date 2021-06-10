@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class TargetConnections : PieceConnections
 {
-    public override bool IsAccessible(Direction direction)
+    private string label;
+
+    private void Start()
     {
-        return true;
+        label = GetComponent<TargetActivation>().label;
+    }
+
+    public override bool IsAccessible(Direction direction, string label)
+    {
+        return label == this.label;
     }
 
     public override Direction GetNextDirection(Direction inDirection)

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TargetActivation : MonoBehaviour
 {
-    [SerializeField]
-    private string label;
+    public string label;
     private bool reached;
     public bool active { get; private set; }
     [SerializeField]
@@ -17,18 +16,10 @@ public class TargetActivation : MonoBehaviour
     {
         reached = false;
         active = false;
-        borderMaterial = new Material(Shader.Find("Sprites/Default"));
+        borderMaterial = GetComponent<ActiveBorder>().borderMaterial;
         targetOpacity = 0.5f;
-        foreach (Transform child in transform)
-        {
-            if (child.CompareTag("Border"))
-            {
-                Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
-                childRenderer.material = borderMaterial;
-            }
-            color.a = 0.5f;
-            borderMaterial.color = color;
-        }
+        color.a = 0.5f;
+        borderMaterial.color = color;
     }
 
     void Update()

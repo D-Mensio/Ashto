@@ -6,8 +6,8 @@ public class SourceSpawn : MonoBehaviour
 {
     [SerializeField]
     private int strength;
-    [SerializeField]
-    private string label;
+
+    public string label;
     [SerializeField]
     private Color color;
 
@@ -25,40 +25,28 @@ public class SourceSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Set borders color
-        Material borderMaterial = new Material(Shader.Find("Sprites/Default"));
-        borderMaterial.color = color;
-        foreach (Transform child in transform)
-        {
-            if (child.CompareTag("Border"))
-            {
-                Renderer childRenderer = child.gameObject.GetComponent<Renderer>();
-                childRenderer.material = borderMaterial;
-            }
-        }
-
-        //Start spawn
+        GetComponent<ActiveBorder>().borderMaterial.color = color;
         StartCoroutine(SpawnBalls());
     }
 
     private void Activate()
     {
-        if (!(sc.northNeighbor is null) && sc.northNeighbor.IsAccessible(Direction.North))
+        if (!(sc.northNeighbor is null) && sc.northNeighbor.IsAccessible(Direction.North, label))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
             newBall.Initialize(label, Direction.North, sc, transform.position, strength, color);
         }
-        if (!(sc.southNeighbor is null) && sc.southNeighbor.IsAccessible(Direction.South))
+        if (!(sc.southNeighbor is null) && sc.southNeighbor.IsAccessible(Direction.South, label))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
             newBall.Initialize(label, Direction.South, sc, transform.position, strength, color);
         }
-        if (!(sc.eastNeighbor is null) && sc.eastNeighbor.IsAccessible(Direction.East))
+        if (!(sc.eastNeighbor is null) && sc.eastNeighbor.IsAccessible(Direction.East, label))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
             newBall.Initialize(label, Direction.East, sc, transform.position, strength, color);
         }
-        if (!(sc.westNeighbor is null) && sc.westNeighbor.IsAccessible(Direction.West))
+        if (!(sc.westNeighbor is null) && sc.westNeighbor.IsAccessible(Direction.West, label))
         {
             Ball newBall = Instantiate(ballPrefab).GetComponent<Ball>();
             newBall.Initialize(label, Direction.West, sc, transform.position, strength, color);

@@ -23,6 +23,7 @@ public class Ball : MonoBehaviour
     private bool targetReached;
 
     private bool isDeleting;
+
     void Awake()
     {
         rend = GetComponent<Renderer>();
@@ -57,7 +58,7 @@ public class Ball : MonoBehaviour
             targetPiece = currentPiece.GetConnection(direction);
             targetIsMidPoint = false;
         }
-        else if (!(targetPiece is null) && targetPiece.IsAccessible(direction))
+        else if (!(targetPiece is null) && targetPiece.IsAccessible(direction, label))
         {    
             //direction doesn't change
             targetIsMidPoint = true;
@@ -92,7 +93,7 @@ public class Ball : MonoBehaviour
 
     private void Move()
     {
-        if (destroyOnNextMove || targetReached || (targetIsMidPoint && !targetPiece.IsAccessible(direction)))
+        if (destroyOnNextMove || targetReached || (targetIsMidPoint && !targetPiece.IsAccessible(direction, label)))
         {
             Delete();
         }

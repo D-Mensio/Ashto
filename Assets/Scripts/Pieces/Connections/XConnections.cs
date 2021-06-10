@@ -11,7 +11,7 @@ public class XConnections : PieceConnections
         rotatePiece = GetComponent<RotatePiece>();
     }
 
-    public override bool IsAccessible(Direction direction)
+    public override bool IsAccessible(Direction direction, string label)
     {
         return !rotatePiece.isRotating;
     }

@@ -50,21 +50,6 @@ public class BakeNeighboors
         PrefabUtility.RecordPrefabInstancePropertyModifications(levelManager);
         EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
     }
-    /*
-    [MenuItem("Pieces/Bake Targets")]
-    static void BakeTargets()
-    {
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
-        LevelManager levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        levelManager.targets = new List<Target>();
-        foreach (GameObject t in targets)
-        {
-            levelManager.targets.Add(t.GetComponent<Target>());
-        }
-        PrefabUtility.RecordPrefabInstancePropertyModifications(levelManager);
-        EditorSceneManager.SaveOpenScenes();
-    }
-    */
 
     public static GameObject GetObjAtPos(Vector3 p)
     {

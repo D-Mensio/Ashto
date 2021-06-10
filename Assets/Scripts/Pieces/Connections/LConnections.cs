@@ -12,7 +12,7 @@ public class LConnections : PieceConnections
         rotatePiece = GetComponent<RotatePiece>();
     }
 
-    public override bool IsAccessible(Direction direction)
+    public override bool IsAccessible(Direction direction, string label)
     {
         //check if piece is currently rotating
         if (rotatePiece.isRotating)
