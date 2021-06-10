@@ -16,6 +16,11 @@ public class XConnections : PieceConnections
         return !rotatePiece.isRotating;
     }
 
+    public override bool IsConnected(Direction direction, string label, bool fromTargetOrSource = false, bool fromSource = false)
+    {
+        return true;
+    }
+
     public override Direction GetNextDirection(Direction inDirection)
     {
         return inDirection;

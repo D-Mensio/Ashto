@@ -18,6 +18,11 @@ public class LConnections : PieceConnections
         if (rotatePiece.isRotating)
             return false;
 
+        return IsConnected(direction, label);
+    }
+
+    public override bool IsConnected(Direction direction, string label, bool fromTarget = false, bool fromSource = false)
+    {
         switch (direction)
         {
             case Direction.North:

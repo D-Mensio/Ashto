@@ -58,7 +58,7 @@ public class Ball : MonoBehaviour
             targetPiece = currentPiece.GetConnection(direction);
             targetIsMidPoint = false;
         }
-        else if (!(targetPiece is null) && targetPiece.IsAccessible(direction, label))
+        else if (!(targetPiece is null) && targetPiece.IsConnected(direction, label))
         {    
             //direction doesn't change
             targetIsMidPoint = true;

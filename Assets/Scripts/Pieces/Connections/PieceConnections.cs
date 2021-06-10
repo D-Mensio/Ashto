@@ -22,6 +22,8 @@ public abstract class PieceConnections : MonoBehaviour
 
     public abstract bool IsAccessible(Direction direction, string label);
 
+    public abstract bool IsConnected(Direction direction, string label, bool fromTarget = false, bool fromSource = false);
+
     public abstract Direction GetNextDirection(Direction inDirection);
 
     public PieceConnections GetConnection(Direction direction)

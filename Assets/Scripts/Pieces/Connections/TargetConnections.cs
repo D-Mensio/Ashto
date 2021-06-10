@@ -16,6 +16,11 @@ public class TargetConnections : PieceConnections
         return label == this.label;
     }
 
+    public override bool IsConnected(Direction direction, string label, bool fromTarget = false, bool fromSource = false)
+    {
+        return (!fromTarget && (!fromSource || this.label == label));
+    }
+
     public override Direction GetNextDirection(Direction inDirection)
     {
         return Direction.Stop;
