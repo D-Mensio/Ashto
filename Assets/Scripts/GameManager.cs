@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,8 +29,7 @@ public class GameManager : MonoBehaviour
         {
             sceneToLoad = PlayerPrefs.GetInt("LastLevelPlayed");
         }
-
-        LoadLevel(sceneToLoad);
+        LoadLevel(sceneToLoad);      
     }
 
     private void LoadLevel(int n)

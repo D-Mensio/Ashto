@@ -16,7 +16,15 @@ public class BakeNeighboors
             PieceConnections pc = p.GetComponent<PieceConnections>();
             Debug.Log("Baked " + pc.GetType());
             Vector3 pos = p.transform.position;
+
+            //Reset Neighboors
+            pc.northNeighbor = null;
+            pc.eastNeighbor = null;
+            pc.southNeighbor = null;
+            pc.westNeighbor = null;
             //Debug.Log(pos);
+
+            //Calculate neighboors
             if(GetObjAtPos(pos + Vector3.up))
                 pc.northNeighbor = GetObjAtPos(pos + Vector3.up).GetComponent<PieceConnections>();
             if (GetObjAtPos(pos + Vector3.down))
@@ -37,6 +45,14 @@ public class BakeNeighboors
             TargetConnections pc = t.GetComponent<TargetConnections>();
             Debug.Log("Baked " + pc.GetType());
             Vector3 pos = t.transform.position;
+
+            //Reset Neighboors
+            pc.northNeighbor = null;
+            pc.eastNeighbor = null;
+            pc.southNeighbor = null;
+            pc.westNeighbor = null;
+
+            //Calculate neighboors
             if (GetObjAtPos(pos + Vector3.up))
                 pc.northNeighbor = GetObjAtPos(pos + Vector3.up).GetComponent<PieceConnections>();
             if (GetObjAtPos(pos + Vector3.down))
