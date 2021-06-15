@@ -6,7 +6,10 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public Camera cam;
+    public Camera effectCam;
+    public GameObject touchEffect;
     private Menu menu;
+    private BackButton backButton;
     ProcessInputs processFunc;
 
     delegate void ProcessInputs();
@@ -14,6 +17,7 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         menu = GameObject.Find("UI").GetComponent<Menu>();
+        backButton = GameObject.Find("BackButton").GetComponent<BackButton>();
         if (Input.touchSupported)
             processFunc = ProcessTouch;
         else
@@ -22,7 +26,7 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        if (!menu.open)
+        if (!menu.open && !backButton.open)
         {
             processFunc();
         }
@@ -39,6 +43,9 @@ public class InputManager : MonoBehaviour
             {
                 Debug.Log("Touch detected");
                 Vector3 pos = cam.ScreenToWorldPoint(touch.position);
+
+                Vector3 effectPos = effectCam.ScreenToWorldPoint(touch.position);
+                PlayTouchEffect(effectPos);
                 Debug.Log(pos);
                 List<GameObject> gs = GetObjAtPos(pos);
                 foreach (GameObject g in gs)
@@ -63,6 +70,9 @@ public class InputManager : MonoBehaviour
             Debug.Log("Click detected");
             Vector3 pos = cam.ScreenToWorldPoint(Input.mousePosition);
 
+            Vector3 effectPos = effectCam.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,5);
+            PlayTouchEffect(effectPos);
+
             List<GameObject> gs = GetObjAtPos(pos);
             foreach (GameObject g in gs)
             {
@@ -77,5 +87,17 @@ public class InputManager : MonoBehaviour
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(p, 0);
         return new List<GameObject> (hitColliders.Select(x => x.gameObject));
+    }
+
+    private void PlayTouchEffect(Vector3 pos)
+    {
+        GameObject touchEff = Instantiate(touchEffect, pos, Quaternion.identity);
+        StartCoroutine(DestroyAfter1s(touchEff));
+    }
+
+    private IEnumerator DestroyAfter1s(GameObject obj)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.Destroy(obj);
     }
 }

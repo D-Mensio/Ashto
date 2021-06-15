@@ -10,7 +10,8 @@ public class LoadLevelPanel : MonoBehaviour
     public GameObject content;
     public GameObject levelButton;
     private Animator levelSelectAnim;
-    public GameObject backButton;
+    public GameObject backButtonObj;
+    private BackButton backButton;
 
     private bool open;
 
@@ -25,13 +26,14 @@ public class LoadLevelPanel : MonoBehaviour
         }
         levelSelectAnim = GetComponent<Animator>();
         open = false;
+        backButton = backButtonObj.GetComponent<BackButton>();
     }
 
     public void LoadLevel(int n)
     {
         Debug.Log("Load level button pressed");
-        StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().LoadScene(n));
         Close();
+        StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().LoadScene(n));
     }
 
     private void UpdateLock()
@@ -50,7 +52,7 @@ public class LoadLevelPanel : MonoBehaviour
             open = true;
             Debug.Log("Level select button pressed");
             levelSelectAnim.SetBool("isOpen", true);
-            backButton.SetActive(true);
+            backButton.status = 2;
             UpdateLock();
         }
     }
@@ -61,7 +63,7 @@ public class LoadLevelPanel : MonoBehaviour
         {
             open = false;
             levelSelectAnim.SetBool("isOpen", false);
-            backButton.SetActive(false);
+            backButton.status = 1;
         }
     }
 

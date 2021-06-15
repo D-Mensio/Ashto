@@ -6,12 +6,15 @@ public class CreditsPanel : MonoBehaviour
 {
     private bool open;
     private Animator creditsAnim;
-    public GameObject backButton;
+
+    public GameObject backButtonObj;
+    private BackButton backButton;
 
     private void Start()
     {
         open = false;
         creditsAnim = GetComponent<Animator>();
+        backButton = backButtonObj.GetComponent<BackButton>();
     }
 
     public void Open()
@@ -21,7 +24,7 @@ public class CreditsPanel : MonoBehaviour
             open = true;
             Debug.Log("Credits button pressed");
             creditsAnim.SetBool("isOpen", true);
-            backButton.SetActive(true);
+            backButton.status = 3;
         }
     }
 
@@ -31,7 +34,7 @@ public class CreditsPanel : MonoBehaviour
         {
             open = false;
             creditsAnim.SetBool("isOpen", false);
-            backButton.SetActive(false);
+            backButton.status = 1;
         }
     }
 }

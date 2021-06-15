@@ -3978,7 +3978,7 @@ PrefabInstance:
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: westNeighbor
       value: 
-      objectReference: {fileID: 481616675}
+      objectReference: {fileID: 0}
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: northNeighbor
       value: 
@@ -5262,7 +5262,7 @@ PrefabInstance:
     - target: {fileID: 8782020457868004816, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: eastNeighbor
       value: 
-      objectReference: {fileID: 1147383621}
+      objectReference: {fileID: 0}
     - target: {fileID: 8782020457868004816, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: westNeighbor
       value: 
@@ -5274,7 +5274,7 @@ PrefabInstance:
     - target: {fileID: 8782020457868004816, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: southNeighbor
       value: 
-      objectReference: {fileID: 1327767384}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
 --- !u!4 &991457980 stripped
@@ -5572,7 +5572,7 @@ PrefabInstance:
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: northNeighbor
       value: 
-      objectReference: {fileID: 1736940457}
+      objectReference: {fileID: 0}
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: southNeighbor
       value: 
@@ -5880,7 +5880,7 @@ PrefabInstance:
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: eastNeighbor
       value: 
-      objectReference: {fileID: 823965726}
+      objectReference: {fileID: 0}
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: westNeighbor
       value: 
@@ -7315,7 +7315,7 @@ PrefabInstance:
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: westNeighbor
       value: 
-      objectReference: {fileID: 1388658}
+      objectReference: {fileID: 0}
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: northNeighbor
       value: 
@@ -7323,7 +7323,7 @@ PrefabInstance:
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: southNeighbor
       value: 
-      objectReference: {fileID: 2029589932}
+      objectReference: {fileID: 0}
     - target: {fileID: 1015278087920828024, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -8750,19 +8750,19 @@ PrefabInstance:
     - target: {fileID: 5961708527278207064, guid: 51137b0c01872ad47a3b751fbb42872e, type: 3}
       propertyPath: targets.Array.data[4]
       value: 
-      objectReference: {fileID: 1244495373}
+      objectReference: {fileID: 1024782596}
     - target: {fileID: 5961708527278207064, guid: 51137b0c01872ad47a3b751fbb42872e, type: 3}
       propertyPath: targets.Array.data[5]
       value: 
-      objectReference: {fileID: 1552227204}
+      objectReference: {fileID: 1244495373}
     - target: {fileID: 5961708527278207064, guid: 51137b0c01872ad47a3b751fbb42872e, type: 3}
       propertyPath: targets.Array.data[6]
       value: 
-      objectReference: {fileID: 1751547994}
+      objectReference: {fileID: 1552227204}
     - target: {fileID: 5961708527278207064, guid: 51137b0c01872ad47a3b751fbb42872e, type: 3}
       propertyPath: targets.Array.data[7]
       value: 
-      objectReference: {fileID: 1024782596}
+      objectReference: {fileID: 1751547994}
     - target: {fileID: 5961708527278207064, guid: 51137b0c01872ad47a3b751fbb42872e, type: 3}
       propertyPath: targets.Array.data[8]
       value: 
@@ -8859,7 +8859,7 @@ PrefabInstance:
     - target: {fileID: -7697658346443666130, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: southNeighbor
       value: 
-      objectReference: {fileID: 1327767384}
+      objectReference: {fileID: 0}
     - target: {fileID: 1015278087920828024, guid: 97f769438f187e742957e8991697ee02, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -13433,11 +13433,11 @@ PrefabInstance:
     - target: {fileID: 8782020457868004816, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: westNeighbor
       value: 
-      objectReference: {fileID: 1018914845}
+      objectReference: {fileID: 0}
     - target: {fileID: 8782020457868004816, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: northNeighbor
       value: 
-      objectReference: {fileID: 1551958973}
+      objectReference: {fileID: 0}
     - target: {fileID: 8782020457868004816, guid: d27749c3e85a42547b61c6563c6bf683, type: 3}
       propertyPath: southNeighbor
       value: 

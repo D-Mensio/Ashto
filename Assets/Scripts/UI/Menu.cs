@@ -13,7 +13,8 @@ public class Menu : MonoBehaviour
 
     public GameObject countdown;
 
-    public GameObject backButton;
+    public GameObject backButtonObj;
+    private BackButton backButton;
 
     public GameObject creditsPanel;
     private Animator creditsAnim;
@@ -29,6 +30,7 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        backButton = backButtonObj.GetComponent<BackButton>();
         anim = button.GetComponent<Animator>();
         creditsAnim = creditsPanel.GetComponent<Animator>();
     }
@@ -39,12 +41,14 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 1;
             open = false;
-            backButton.SetActive(false);
+            backButton.status = 0;
+            backButton.Hide();
             countdown.transform.localScale = Vector3.one;
             creditsAnim.SetBool("isOpen", false);
             levelNum.SetActive(false);
             anim.SetBool("isOpen", false);
-            cam.Reset();
+            if(cam)
+                cam.Reset();
         }
     }
 
@@ -54,11 +58,13 @@ public class Menu : MonoBehaviour
         {
             Time.timeScale = 0;
             open = true;
-            backButton.SetActive(true);
+            backButton.status = 1;
+            backButton.Display();
             countdown.transform.localScale = Vector3.zero;
             levelNum.SetActive(true);
             anim.SetBool("isOpen", true);
-            cam.ZoomOut();
+            if(cam)
+                cam.ZoomOut();
         }
     }
 }
