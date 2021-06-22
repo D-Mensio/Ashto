@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing the color of a piece's borders
 public class PieceColor : MonoBehaviour
 {
     [SerializeField]
-    private Color defaultColor;
+    private Color defaultColor; //default color for the borders
     private Color targetColor;
-    public List<Ball> containedBalls;
-    private Dictionary<Color, int> containedColors;
+    public List<Ball> containedBalls;   //list containing all the balls currently present in the piece
+    private Dictionary<Color, int> containedColors; //dictionary containing, for each color of the balls present in containedBalls, the number of balls currently present in the piece
     private Material borderMaterial;
 
     private void Awake()
@@ -17,8 +18,7 @@ public class PieceColor : MonoBehaviour
         containedColors = new Dictionary<Color, int>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         borderMaterial = new Material(Shader.Find("Sprites/Default"));
         borderMaterial.color = defaultColor;
@@ -32,13 +32,14 @@ public class PieceColor : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    //Updates border color toward the target color
+    private void Update()
     {
         setBordersColor();
         borderMaterial.color = Color.Lerp(borderMaterial.color, targetColor, Time.deltaTime * 5);
     }
 
+    //Checks if the colliding object entering the piece is a ball, and updates containedBalls and containedColors
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Ball")
@@ -56,6 +57,7 @@ public class PieceColor : MonoBehaviour
         }
     }
 
+    //Checks if the colliding object exiting the piece is a ball, and updates containedBalls and containedColors
     public void OnTriggerExit2D(Collider2D col)
     {
         if (col.tag == "Ball")
@@ -76,6 +78,7 @@ public class PieceColor : MonoBehaviour
         }
     }
 
+    //Calculates target color as an interpolation of the colors of containedColors
     private void setBordersColor()
     {
         Color borderColor = defaultColor;
@@ -94,6 +97,7 @@ public class PieceColor : MonoBehaviour
         targetColor = borderColor;
     }
 
+    //Calculates the linear interpolation of a collection of colors
     private Color InterpolateColors(ICollection<Color> colors)
     {
 

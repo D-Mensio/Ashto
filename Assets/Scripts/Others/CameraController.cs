@@ -2,70 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing main camera movement for each scene
 public class CameraController : MonoBehaviour
 {
     private Camera cam;
     private float targetSize;
     private float normalSize;
-    
-    public Vector3 zeroPos;
+
+    [SerializeField]
+    private Vector3 zeroPos;
     private Vector3 offScreenPos;
 
+    //Variables related to movement 1 (due to level transition)
     private Vector3 relativePos1;
-    private Vector3 relativePos2;
-
     private Vector3 targetPos1;
+
+    //Variable related to movement 2 (due to menu opening/closing)
+    private Vector3 relativePos2;
     private Vector3 targetPos2;
 
+    //Position obtained adding the relative movements of types 1 and 2
     private Vector3 targetPos;
 
     private bool levelTransition;
     private bool skipFrame;
 
-    public float speed1;
-    public float speed2;
-    public float zoom;
-
+    [SerializeField]
+    private float speed1;
+    [SerializeField]
+    private float speed2;
+    [SerializeField]
+    private float zoomLevel;
 
     private void Awake()
     {
         cam = GetComponent<Camera>();
+        levelTransition = false;
         normalSize = cam.orthographicSize;
-        zoom = (normalSize / 3);
+        zoomLevel = (normalSize / 3);
         targetSize = cam.orthographicSize;
-        offScreenPos = new Vector3(0, -2 * normalSize, -10);
+        offScreenPos = new Vector3(0, -2 * normalSize, -10);    //calculate offsceen position based on camera's size
         targetPos1 = zeroPos;
         targetPos2 = zeroPos;
         targetPos = zeroPos;
         relativePos1 = offScreenPos;
         relativePos2 = zeroPos;
         transform.position = offScreenPos;
-        skipFrame = true; //skip first frame
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        levelTransition = false;
+
+        skipFrame = true; //skip first frame
+
+        //if menu is open when loading the scene, the camera starts zoomed out
         Menu m = GameObject.Find("UI").GetComponent<Menu>();
         if (m.open)
             ZoomOut();
     }
 
-    // Update is called once per frame
+
+    //Updates gradually camera position and zoom
     void Update()
     {
-        //Debug.Log(transform.position);
-        //Debug.Log(Time.unscaledDeltaTime);
         if (skipFrame)
         {
-            //Debug.Log("skipped");
             skipFrame = false;
         }
         else
         {
-            //Debug.Log("not skipped");       
-
             //Control zoom
             if (targetSize != cam.orthographicSize)
                 cam.orthographicSize += (targetSize - cam.orthographicSize) * speed2 * Time.unscaledDeltaTime;
@@ -85,8 +90,6 @@ public class CameraController : MonoBehaviour
             }
             else
                 relativeMov1 = Vector3.zero;
-
-            
 
             //Calculate position relative to movement 2 (menu open/closed)
             Vector3 relativeMov2 = relativePos2;
@@ -109,23 +112,20 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //Sets next frame to be skipped on application focus/unfocus to avoid excessive movement due to big values of Time.unscaledDeltaTime
     void OnApplicationFocus(bool hasFocus)
     {
-        //Enable skipFrame when unfocus in app
         if (!hasFocus)
         {
-           //Debug.Log("focus");
             skipFrame = true;
-            //timeFromLastFrame = 0;
         }
         else
         {
-            //Debug.Log("unfocus");
             skipFrame = true;
-            //timeFromLastFrame = 0;
         }
     }
 
+    //Sets next frame to be skipped on application pause to avoid excessive movement due to big values of Time.unscaledDeltaTime
     void OnApplicationPause(bool pauseStatus)
     {
         //Enable skipFrame when pausing app
@@ -136,16 +136,18 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //Sets new target position/zoom for the camera, used for menu open animation
     public void ZoomOut()
     {
         if (!levelTransition)
         {
-            targetSize = normalSize + zoom;
-            targetPos2 += new Vector3(0, -zoom, 0);
-            targetPos += new Vector3(0, -zoom, 0);
+            targetSize = normalSize + zoomLevel;
+            targetPos2 += new Vector3(0, -zoomLevel, 0);
+            targetPos += new Vector3(0, -zoomLevel, 0);
         }
     }
 
+    //Resets target position/zoom for the camera to the default values
     public void Reset()
     {
         if (!levelTransition)
@@ -156,6 +158,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //Controls camera movement for level transitions
     public void LevelTransition()
     {
         targetPos1 = offScreenPos;

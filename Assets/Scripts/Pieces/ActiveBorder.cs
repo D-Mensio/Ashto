@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing the displayed animation for the dynamic borders of sources and targets
 public class ActiveBorder : MonoBehaviour
 {
     public Material borderMaterial;
@@ -72,8 +73,6 @@ public class ActiveBorder : MonoBehaviour
             westBorder.GetComponent<Animator>().Play("open");
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         if (northConnections && northConnections.IsConnected(Direction.North, label, isTarget, isSource))

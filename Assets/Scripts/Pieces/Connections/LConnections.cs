@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing the connections to neighbouring pieces for L-type (90° corner) pieces. Requires a RotatePiece component
 public class LConnections : PieceConnections
 {
-
+    //RotatePiece component of the piece. Phase 0 means the piece is connected to the south and east neighboor
     private RotatePiece rotatePiece;
 
     private void Awake()
@@ -12,6 +13,7 @@ public class LConnections : PieceConnections
         rotatePiece = GetComponent<RotatePiece>();
     }
 
+    //Checks if the piece is currently accessible from a certain direction (false if a piece is currently rotating)
     public override bool IsAccessible(Direction direction, string label)
     {
         //check if piece is currently rotating
@@ -21,6 +23,7 @@ public class LConnections : PieceConnections
         return IsConnected(direction, label);
     }
 
+    //Checks if the piece is connected from a certain direction
     public override bool IsConnected(Direction direction, string label, bool fromTarget = false, bool fromSource = false)
     {
         switch (direction)
@@ -38,6 +41,7 @@ public class LConnections : PieceConnections
         }
     }
 
+    //Returns the exit direction for a ball entering from inDirection
     public override Direction GetNextDirection(Direction inDirection)
     {
         switch (rotatePiece.phase)

@@ -6,10 +6,12 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 
+//Controls first scene loading and general settings on application start
 public class GameManager : MonoBehaviour
 {
     public int startScene;
-    public bool testing;
+    [SerializeField]
+    private bool testing;
 
     private void Start()
     {

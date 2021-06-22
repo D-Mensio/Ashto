@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LastSceneController : MonoBehaviour
 {
-
     private Animator anim;
     public Color lightColor;
     public Color darkColor;

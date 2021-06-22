@@ -2,33 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing the spawn of balls from a source. Requires a SourceConnections and an ActiveBorder component
 public class SourceSpawn : MonoBehaviour
 {
     [SerializeField]
     private int strength;
-
     public string label;
     [SerializeField]
     private Color color;
 
     public GameObject ballPrefab;
-
     private SourceConnections sc;
 
-
-
-    private void Awake()
+    private void Start()
     {
         sc = GetComponent<SourceConnections>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         GetComponent<ActiveBorder>().borderMaterial.color = color;
         StartCoroutine(SpawnBalls());
     }
 
+    //Creates and initializes a ball in each direction with an accessible neighbouring piece 
     private void Activate()
     {
         if (!(sc.northNeighbor is null) && sc.northNeighbor.IsAccessible(Direction.North, label))
@@ -53,6 +46,7 @@ public class SourceSpawn : MonoBehaviour
         }
     }
 
+    //Coroutine spawning balls in each direction with an accessible neighbouring piece
     private IEnumerator SpawnBalls()
     {
         while (true)

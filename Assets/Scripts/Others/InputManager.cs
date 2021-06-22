@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+//Controls inputs for touch/mouse based devices
 public class InputManager : MonoBehaviour
 {
     public Camera cam;
     public Camera effectCam;
-    public GameObject touchEffect;
+    public GameObject touchEffect; //touch/click visual feedback
     private Menu menu;
     private BackButton backButton;
     ProcessInputs processFunc;
@@ -44,9 +45,9 @@ public class InputManager : MonoBehaviour
                 Debug.Log("Touch detected");
                 Vector3 pos = cam.ScreenToWorldPoint(touch.position);
 
-                Vector3 effectPos = effectCam.ScreenToWorldPoint(touch.position);
+                Vector3 effectPos = effectCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 5));
                 PlayTouchEffect(effectPos);
-                Debug.Log(pos);
+                //Debug.Log(pos);
                 List<GameObject> gs = GetObjAtPos(pos);
                 foreach (GameObject g in gs)
                 {
@@ -70,7 +71,7 @@ public class InputManager : MonoBehaviour
             Debug.Log("Click detected");
             Vector3 pos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-            Vector3 effectPos = effectCam.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,5);
+            Vector3 effectPos = effectCam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5));
             PlayTouchEffect(effectPos);
 
             List<GameObject> gs = GetObjAtPos(pos);

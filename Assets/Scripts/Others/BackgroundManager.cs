@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing the initialization and dynamic setting of parameters for the background shader
 public class BackgroundManager : MonoBehaviour
 {
+    //target colors of the background gradient, used for gradual switch between scenes
     private Color targetColor1;
     private Color targetColor2;
+
+    //current offset of the background texture, used to keep track of its movement between scenes
     private float offsetH;
     private float offsetV;
+
+    //horizontal and vertical speed of the background texture, value randomly calculated (between -2 and +2) for each new scene
     private float speedH;
     private float speedV;
     [SerializeField]
@@ -47,6 +53,7 @@ public class BackgroundManager : MonoBehaviour
         offsetV += verticalSpeedModifier * speedV * Time.unscaledDeltaTime;
     }
 
+    //Sets target colors and recalculates speed values
     public void SetColor(Color color1, Color color2)
     {
         targetColor1 = color1;

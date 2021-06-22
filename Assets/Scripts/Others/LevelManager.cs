@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Component that manages scene loading for the current level and checks win condition on every frame
 public class LevelManager : MonoBehaviour
 {
     public int levelNumber;

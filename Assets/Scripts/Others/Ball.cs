@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Component managing the color and movement of a ball
 public class Ball : MonoBehaviour
 {
     //Parameters
@@ -49,6 +50,7 @@ public class Ball : MonoBehaviour
         Move();
     }
 
+    //Calculates next target position for the ball
     private void UpdateTargetPosition()
     {
         //get Direction
@@ -91,6 +93,7 @@ public class Ball : MonoBehaviour
         }
     }
 
+    //Check if movement is possible, and start async movement coroutine
     private void Move()
     {
         if (destroyOnNextMove || targetReached || (targetIsMidPoint && !targetPiece.IsAccessible(direction, label)))
@@ -104,6 +107,7 @@ public class Ball : MonoBehaviour
         }
     }
 
+    //Coroutine calculating the ball position each frame by interpolating between the starting position, and target position
     private IEnumerator AsyncMove(Vector3 targetPosition)
     {
         Vector3 startingPos = transform.position;
