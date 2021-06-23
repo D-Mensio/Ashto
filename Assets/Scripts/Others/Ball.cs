@@ -114,6 +114,7 @@ public class Ball : MonoBehaviour
 
         float elapsedTime = 0;
         var time = 0.5f / speed;
+
         while (elapsedTime < time && !isDeleting)
         {
             Vector3 pos = transform.position;
@@ -126,6 +127,14 @@ public class Ball : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        //last movement
+        Vector3 lastpos = transform.position;
+        transform.position = targetPosition;
+        currentStrength -= (transform.position - lastpos).magnitude;
+        SetOpacity(Mathf.Max(0.2f + currentStrength / strength, 0.05f));
+
+
         if (!isDeleting)
         {
             if (targetIsMidPoint)

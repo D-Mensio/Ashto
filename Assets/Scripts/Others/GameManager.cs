@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 90;
         int sceneToLoad;
 
         if (!PlayerPrefs.HasKey("LevelUnlocked"))

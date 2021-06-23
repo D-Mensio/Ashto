@@ -8,6 +8,6 @@ public class RestartButton : MonoBehaviour
     public void OnPress()
     {
         Debug.Log("Restart button pressed");
-        StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().Restart());
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().Restart();
     }
 }

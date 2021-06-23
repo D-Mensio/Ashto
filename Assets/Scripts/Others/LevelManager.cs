@@ -21,6 +21,8 @@ public class LevelManager : MonoBehaviour
 
     private AudioSource winClip;
 
+    private bool loadingScene;
+
     private void Awake()
     {
         BackgroundManager back = GameObject.Find("Background").GetComponent<BackgroundManager>();
@@ -38,6 +40,7 @@ public class LevelManager : MonoBehaviour
         winClip = GetComponent<AudioSource>();
         nextLevel = levelNumber + 1;
         PlayerPrefs.SetInt("LastLevelPlayed", levelNumber);
+        loadingScene = false;
     }
 
     // Start is called before the first frame update
@@ -87,31 +90,29 @@ public class LevelManager : MonoBehaviour
             //Debug.Log("win");
             if (PlayerPrefs.GetInt("LevelUnlocked") < nextLevel)
                 PlayerPrefs.SetInt("LevelUnlocked", nextLevel);
-            StartCoroutine(LoadNextScene());
+            StartCoroutine(LoadSceneAsync(nextLevel));
         }
 
     }
 
-    private IEnumerator LoadNextScene()
+    public IEnumerator LoadSceneAsync(int n)
     {
-        GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
-        yield return new WaitForSecondsRealtime(1f);
-        SceneManager.LoadScene(nextLevel, LoadSceneMode.Single);
+        if (!loadingScene)
+        {
+            loadingScene = true;
+            AsyncOperation op = SceneManager.LoadSceneAsync(n);
+            op.allowSceneActivation = false;
+            GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
+            yield return new WaitForSecondsRealtime(1f);
+            op.allowSceneActivation = true;
+        }
     }
 
-    public IEnumerator LoadScene(int n)
-    {
-        GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
-        yield return new WaitForSecondsRealtime(1f);
-        SceneManager.LoadScene(n, LoadSceneMode.Single);
-    }
 
-    public IEnumerator Restart()
+    public void Restart()
     {
         Debug.Log("Restart");
-        GameObject.Find("Main Camera").GetComponent<CameraController>().LevelTransition();
-        yield return new WaitForSecondsRealtime(1f);
-        SceneManager.LoadScene(levelNumber, LoadSceneMode.Single);
+        StartCoroutine(LoadSceneAsync(levelNumber));
     }
 
 }

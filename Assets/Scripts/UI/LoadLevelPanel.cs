@@ -33,7 +33,7 @@ public class LoadLevelPanel : MonoBehaviour
     {
         Debug.Log("Load level button pressed");
         Close();
-        StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().LoadScene(n));
+        StartCoroutine(GameObject.Find("LevelManager").GetComponent<LevelManager>().LoadSceneAsync(n));
     }
 
     private void UpdateLock()
