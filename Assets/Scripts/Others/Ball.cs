@@ -16,51 +16,78 @@ public class Ball : MonoBehaviour
 
     //Movement variables
     private Direction direction;
+    private Vector3 startingPos;
     private Vector3 targetPosition;
-    private PieceConnections targetPiece;
     private PieceConnections currentPiece;
     private bool targetIsMidPoint;
-    private bool destroyOnNextMove;
-    private bool targetReached;
+
+    private float progress;
 
     private bool isDeleting;
+    private bool isCreating;
+
+    private Vector3 ballDim;
 
     void Awake()
     {
         rend = GetComponent<Renderer>();
         rend.material = new Material(rend.material);
+        isCreating = true;
+        ballDim = transform.localScale;
+        transform.localScale = Vector3.zero;
     }
 
     public void Initialize(string label, Direction direction, PieceConnections piece, Vector3 position, float strength, Color color)
     {
         this.label = label;
-        this.speed = 1;
+        this.speed = 2;
+        this.progress = 0;
         this.strength = strength;
         this.currentStrength = strength;
         this.direction = direction;
         transform.position = new Vector3(position.x, position.y, transform.position.z);
+        this.startingPos = transform.position;
         this.targetPosition = transform.position;
         this.currentPiece = piece;            
         this.targetIsMidPoint = true;
-        this.destroyOnNextMove = false;
-        this.targetReached = false;
         rend.material.color = color;
         this.color = color;
-        UpdateTargetPosition();
-        Move();
+        StartCoroutine(CreateBall());
+    }
+
+    private void Update()
+    {
+        if (!isDeleting && !isCreating)
+        {
+            if (transform.position == targetPosition)
+            {
+                UpdateTargetPosition();
+                //Debug.Log("Updated target");
+            }
+            progress = Mathf.Clamp(progress + Time.deltaTime * speed,0,1);
+
+            //Update position
+            Vector3 tempPos = transform.position;
+            transform.position = Vector3.Lerp(startingPos, targetPosition, progress);
+
+            currentStrength -= (transform.position - tempPos).magnitude;
+            SetOpacity(Mathf.Max(0.2f + currentStrength / strength, 0.05f));
+        }
     }
 
     //Calculates next target position for the ball
     private void UpdateTargetPosition()
     {
+        progress = 0;
+        startingPos = targetPosition;
         //get Direction
         if (targetIsMidPoint)
         {
             direction = currentPiece.GetNextDirection(direction);
-            targetPiece = currentPiece.GetConnection(direction);
+            currentPiece = currentPiece.GetConnection(direction);
             targetIsMidPoint = false;
         }
-        else if (!(targetPiece is null) && targetPiece.IsConnected(direction, label))
+        else if (!(currentPiece is null) && currentPiece.IsAccessible(direction, label))
         {    
             //direction doesn't change
             targetIsMidPoint = true;
@@ -68,7 +95,7 @@ public class Ball : MonoBehaviour
         else
         {
             //either next piece is not accessible or it doesn't exist
-            destroyOnNextMove = true;
+            Delete();
         }
         //update target position
         switch (direction)
@@ -88,60 +115,8 @@ public class Ball : MonoBehaviour
             case Direction.Error:
                 //error handling
             case Direction.Stop:
-                targetReached = true;
+                Delete();
                 break;
-        }
-    }
-
-    //Check if movement is possible, and start async movement coroutine
-    private void Move()
-    {
-        if (destroyOnNextMove || targetReached || (targetIsMidPoint && !targetPiece.IsAccessible(direction, label)))
-        {
-            Delete();
-        }
-        else
-        {
-            StartCoroutine(AsyncMove(targetPosition));
-            UpdateTargetPosition();
-        }
-    }
-
-    //Coroutine calculating the ball position each frame by interpolating between the starting position, and target position
-    private IEnumerator AsyncMove(Vector3 targetPosition)
-    {
-        Vector3 startingPos = transform.position;
-
-        float elapsedTime = 0;
-        var time = 0.5f / speed;
-
-        while (elapsedTime < time && !isDeleting)
-        {
-            Vector3 pos = transform.position;
-            transform.position = Vector3.Lerp(startingPos, targetPosition, (elapsedTime / time));
-
-            currentStrength -= (transform.position - pos).magnitude;
-
-            SetOpacity(Mathf.Max(0.2f + currentStrength / strength, 0.05f));
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        //last movement
-        Vector3 lastpos = transform.position;
-        transform.position = targetPosition;
-        currentStrength -= (transform.position - lastpos).magnitude;
-        SetOpacity(Mathf.Max(0.2f + currentStrength / strength, 0.05f));
-
-
-        if (!isDeleting)
-        {
-            if (targetIsMidPoint)
-            {
-                currentPiece = targetPiece;
-            }
-            Move();
         }
     }
 
@@ -157,15 +132,30 @@ public class Ball : MonoBehaviour
     private IEnumerator DestroyBall()
     {
         float time = 0.15f;
-        float initialOpacity = rend.material.color.a;
+        //float initialOpacity = rend.material.color.a;
         while (time > 0)
         {
-            SetOpacity(initialOpacity * time);
+            //SetOpacity(initialOpacity * time);
+            transform.localScale = Vector3.Lerp(ballDim, Vector3.zero, 1 - time/0.15f);
             time -= Time.deltaTime;
             yield return null;
         }
         transform.position = new Vector3(100, 100, 0);
         Destroy(gameObject);
+    }
+
+    private IEnumerator CreateBall()
+    {
+        float time = 0.15f;
+        //float initialOpacity = rend.material.color.a;
+        while (time > 0)
+        {
+            //SetOpacity(initialOpacity * time);
+            transform.localScale = Vector3.Lerp(Vector3.zero, ballDim, 1 - time / 0.15f);
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        isCreating = false;
     }
 
     private void SetOpacity(float f)

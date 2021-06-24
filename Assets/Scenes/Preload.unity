@@ -1867,6 +1867,7 @@ GameObject:
   - component: {fileID: 743146953}
   - component: {fileID: 743146952}
   - component: {fileID: 743146954}
+  - component: {fileID: 743146955}
   m_Layer: 0
   m_Name: Background Camera
   m_TagString: Untagged
@@ -2035,6 +2036,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743146950}
   m_Enabled: 1
+--- !u!114 &743146955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743146950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc958fc3f5313b147acbd7b0b5ca3754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &754835339
 GameObject:
   m_ObjectHideFlags: 0
@@ -7112,8 +7125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982e41e9ad17634c94610e107d6a421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScene: 65
-  testing: 0
+  startScene: 67
+  testing: 1
 --- !u!1 &879025373
 GameObject:
   m_ObjectHideFlags: 0
