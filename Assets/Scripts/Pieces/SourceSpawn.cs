@@ -6,13 +6,13 @@ using UnityEngine;
 public class SourceSpawn : MonoBehaviour
 {
     [SerializeField]
-    private int strength;
+    protected int strength;
     public string label;
     [SerializeField]
-    private Color color;
+    protected Color color;
 
     public GameObject ballPrefab;
-    private SourceConnections sc;
+    protected SourceConnections sc;
 
     private void Start()
     {

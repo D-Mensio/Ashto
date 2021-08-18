@@ -24,7 +24,9 @@ public class ActiveBorder : MonoBehaviour
     void Awake()
     {
         //Set shared instance of material for all borders of object
-        borderMaterial = new Material(Shader.Find("Sprites/Default"));
+        borderMaterial = new Material(borderMaterial);
+        borderMaterial.SetFloat("_CenterX", transform.position.x);
+        borderMaterial.SetFloat("_CenterY", transform.position.y);
         foreach (Transform child in transform)
         {
             if (child.CompareTag("Border"))

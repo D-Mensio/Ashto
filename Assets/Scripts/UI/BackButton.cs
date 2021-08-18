@@ -13,6 +13,9 @@ public class BackButton : MonoBehaviour
 
     public bool open;
     private Animator closeWindowAnim;
+
+    public GameObject backButton2;
+
     void Awake()
     {
         status = 0;
@@ -60,6 +63,7 @@ public class BackButton : MonoBehaviour
             closeWindowAnim.SetBool("isOpen", true);
             status = 4;
             Display();
+            backButton2.SetActive(true);
         }
     }
 
@@ -71,6 +75,7 @@ public class BackButton : MonoBehaviour
             closeWindowAnim.SetBool("isOpen", false);
             status = 0;
             Hide();
+            backButton2.SetActive(false);
         }
     }
 

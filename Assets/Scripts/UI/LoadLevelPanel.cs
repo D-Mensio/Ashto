@@ -12,6 +12,7 @@ public class LoadLevelPanel : MonoBehaviour
     private Animator levelSelectAnim;
     public GameObject backButtonObj;
     private BackButton backButton;
+    public GameObject backButton2;
 
     private bool open;
 
@@ -54,6 +55,7 @@ public class LoadLevelPanel : MonoBehaviour
             levelSelectAnim.SetBool("isOpen", true);
             backButton.status = 2;
             UpdateLock();
+            backButton2.SetActive(true);
         }
     }
 
@@ -64,6 +66,7 @@ public class LoadLevelPanel : MonoBehaviour
             open = false;
             levelSelectAnim.SetBool("isOpen", false);
             backButton.status = 1;
+            backButton2.SetActive(false);
         }
     }
 

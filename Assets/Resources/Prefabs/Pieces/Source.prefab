@@ -756,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6448d85b8cc2a4bb74be0bd498b9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderMaterial: {fileID: 0}
+  borderMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   northBorder: {fileID: 8094150651668251458}
   eastBorder: {fileID: 1800877886816270507}
   southBorder: {fileID: 7532941251190583474}

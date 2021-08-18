@@ -20,4 +20,5 @@ public class DevCommands
         int n = GameObject.Find("GameManager").GetComponent<GameManager>().startScene;
         PlayerPrefs.SetInt("LevelUnlocked", n);
     }
+
 }

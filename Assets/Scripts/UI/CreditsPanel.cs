@@ -8,6 +8,7 @@ public class CreditsPanel : MonoBehaviour
     private Animator creditsAnim;
 
     public GameObject backButtonObj;
+    public GameObject backButton2;
     private BackButton backButton;
 
     private void Start()
@@ -25,6 +26,7 @@ public class CreditsPanel : MonoBehaviour
             Debug.Log("Credits button pressed");
             creditsAnim.SetBool("isOpen", true);
             backButton.status = 3;
+            backButton2.SetActive(true);
         }
     }
 
@@ -35,6 +37,7 @@ public class CreditsPanel : MonoBehaviour
             open = false;
             creditsAnim.SetBool("isOpen", false);
             backButton.status = 1;
+            backButton2.SetActive(false);
         }
     }
 }

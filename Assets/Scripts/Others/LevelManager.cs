@@ -11,17 +11,17 @@ public class LevelManager : MonoBehaviour
     public int levelNumber;
     public Color lightColor;
     public Color darkColor;
-    private int nextLevel;
+    protected int nextLevel;
 
     public List<TargetActivation> targets;
 
-    private TextMeshProUGUI countdownText;
+    protected TextMeshProUGUI countdownText;
     public GameObject cameraObject;
-    private bool winCheckActive;
+    protected bool winCheckActive;
 
-    private AudioSource winClip;
+    protected AudioSource winClip;
 
-    private bool loadingScene;
+    protected bool loadingScene;
 
     private void Awake()
     {
